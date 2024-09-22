@@ -13,18 +13,12 @@
             border-right: 3px solid white;
             white-space: nowrap;
             overflow: hidden;
-            animation: blink-caret .5s step-end infinite; /* Faster blinking */
         }
 
         .welcome-text {
             font-size: 2em;
             font-weight: bold;
             display: block;
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: white; }
         }
 
         #welcome {
@@ -67,7 +61,7 @@
     const texts = ["I am a game developer.", "I am a website developer."];
     let index = 0;
     let charIndex = 0;
-    const typingSpeed = 50;  // Reduced typing speed for quicker text input
+    const typingSpeed = 50;  // Faster typing speed
     const textElement = document.getElementById('dynamic-text');
 
     function typeWriter() {
@@ -76,7 +70,7 @@
 
         if (charIndex < currentText.length) {
             charIndex++;
-            setTimeout(typeWriter, typingSpeed);  // Faster typing
+            setTimeout(typeWriter, typingSpeed);  // Fast typing
         } else {
             // After typing is finished, fade out quickly
             setTimeout(() => {
@@ -88,7 +82,7 @@
                     textElement.style.opacity = 1;  // Fade in
                     typeWriter();  // Start typing next text
                 }, 200);  // Quick fade-out duration
-            }, 100);  // Shorter pause to complete typing before fade-out
+            }, 100);  // Short pause before fading out
         }
     }
 
