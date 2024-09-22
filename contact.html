@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - ASHEED ELIYANGOD</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: auto; /* Ensure scrolling is enabled */
+        }
+
+        header {
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .contact-form input, 
+        .contact-form textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .contact-form button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .social-links img {
+            width: 24px;
+            height: 24px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><a href="portfolio.html">ASHEED ELIYANGOD</a></h1>
+    <nav>
+        <ul>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="skills.html">Skills</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="contact">
+    <h2>Contact Me</h2>
+    <form class="contact-form">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2024 ASHEED ELIYANGOD. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/asheed-eliyangod/" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/linkedin.png" alt="LinkedIn" /></a>
+            <a href="https://github.com/AsheedEliyangod" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/github.png" alt="GitHub" /></a>
+            <a href="https://www.youtube.com/@Solo_Rivalyt" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo"></a>
+        </div>
+    </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

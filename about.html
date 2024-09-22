@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - ASHEED ELIYANGOD</title>
+    <link rel="stylesheet" href="main.css"> <!-- Link to the CSS file -->
+    <link rel="icon" type="image/x-icon" href="https://scontent.fccj3-1.fna.fbcdn.net/v/t39.30808-6/306158489_403382295302114_5230254926544276213_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=-EzS7POtYWcQ7kNvgHcUeC8&_nc_ht=scontent.fccj3-1.fna&oh=00_AYB9V9gV0Gw0DIwX5d7D7hdx53iOS7YO_moZ71VsMGLKkQ&oe=66F05D85">
+</head>
+<body>
+
+<div class="loader visible">
+    <p>Loading...</p>
+</div>
+
+<header>
+    <h1><a href="portfolio.html">ASHEED ELIYANGOD</a></h1>
+    <nav>
+        <ul>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="skills.html">Skills</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="about">
+    <h2>About Me</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="https://easy-peasy.ai/cdn-cgi/image/quality=80,format=auto,width=700/https://fdczvxmwwjwpwbeeqcth.supabase.co/storage/v1/object/public/images/85ccbc77-4aa0-49a5-9be3-433766f15f9c/51461786-8ee3-40a5-8abc-b3dc73f59762.png" alt="Profile Picture" class="profile-image">
+        </div>
+        <div class="col-md-6 text-content">
+            <p>🔭 I’m currently working on React<br>
+               👯 I’m looking to collaborate on Web development<br>
+               🤝 I’m looking for help with frontend<br>
+               🌱 I’m currently learning Game development<br>
+               💬 Ask me about Nothing<br>
+               ⚡ Fun fact I am lazy<br></p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2024 ASHEED ELIYANGOD. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/asheed-eliyangod/" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/linkedin.png" alt="LinkedIn" /></a>
+            <a href="https://github.com/AsheedEliyangod" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/github.png" alt="GitHub" /></a>
+            <a href="https://www.youtube.com/@Solo_Rivalyt" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo" style="width: 22px; height: 22px;"></a>
+        </div>
+    </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loader = document.querySelector('.loader');
+        loader.classList.add('hidden'); // Hide the loader
+        document.body.style.overflow = 'auto'; // Enable scrolling
+    });
+
+    // Smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+</body>
+</html>

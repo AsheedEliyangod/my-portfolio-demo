@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASHEED ELIYANGOD - Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="https://scontent.fccj3-1.fna.fbcdn.net/v/t39.30808-6/306158489_403382295302114_5230254926544276213_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=-EzS7POtYWcQ7kNvgHcUeC8&_nc_ht=scontent.fccj3-1.fna&oh=00_AYB9V9gV0Gw0DIwX5d7D7hdx53iOS7YO_moZ71VsMGLKkQ&oe=66F05D85">
+    <link rel="stylesheet" href="main.css">
+    <style>
+        .typewriter {
+            font-family: Arial, sans-serif;
+            font-size: 2em;
+            border-right: 2px solid;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 4s steps(30, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: black; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="loader visible"></div>
+
+<header>
+    <h1><a href="portfolio.html">ASHEED ELIYANGOD</a></h1>
+    <nav>
+        <ul>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="skills.html">Skills</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="welcome">
+    <div class="typewriter">
+        <span class="welcome-text">YOUKOSO 🅴🆅🅴🆁🆈🅾🅽🅴!</span><br>
+        <span class="game-developer-text">I am a game developer.</span>
+    </div>
+</section>
+
+<style>
+    #welcome {
+        background: linear-gradient(135deg, #f3ec78, #af4261);
+        padding: 50px;
+        text-align: center;
+        color: white;
+    }
+
+    .typewriter {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 3em;
+        border-right: 3px solid white;
+        white-space: nowrap;
+        overflow: hidden;
+        animation: typing 4s steps(30, end), blink-caret .75s step-end infinite;
+    }
+
+    .welcome-text {
+        font-size: 2em;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    .game-developer-text {
+        display: inline-block;
+        animation: typing 3s steps(30, end) infinite;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 0; /* Hidden initially */
+    }
+
+    @keyframes typing {
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+
+    @keyframes blink-caret {
+        from, to {
+            border-color: transparent;
+        }
+        50% {
+            border-color: white;
+        }
+    }
+
+    /* Looping for the game developer text */
+    @keyframes loop {
+        0%, 100% {
+            width: 0;
+        }
+        50% {
+            width: 20em; /* Adjust based on your text length */
+        }
+    }
+
+    .game-developer-text {
+        animation: loop 3s infinite;
+    }
+</style>
+
+
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2024 ASHEED ELIYANGOD. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/asheed-eliyangod/" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/linkedin.png" alt="LinkedIn" /></a>
+            <a href="https://github.com/AsheedEliyangod" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/github.png" alt="GitHub" /></a>
+            <a href="https://www.youtube.com/@Solo_Rivalyt" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo" alt="Youtube" /style="width: 22px; height: 22px;"></a>
+        </div>
+    </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
