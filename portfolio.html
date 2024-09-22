@@ -10,9 +10,10 @@
         .typewriter {
             font-family: 'Courier New', Courier, monospace;
             font-size: 3em;
-            border-right: 3px solid white;
+            border-right: 3px solid white;  /* Static border */
             white-space: nowrap;
             overflow: hidden;
+            padding: 20px;  /* Static padding */
         }
 
         .welcome-text {
@@ -26,11 +27,12 @@
             padding: 50px;
             text-align: center;
             color: white;
+            /* Static section layout */
         }
 
         #dynamic-text {
             opacity: 1;
-            transition: opacity 0.2s ease-in-out; /* Faster fade-out */
+            transition: opacity 0.2s ease-in-out;  /* Fast fade-out */
         }
     </style>
 </head>
@@ -61,7 +63,7 @@
     const texts = ["I am a game developer.", "I am a website developer."];
     let index = 0;
     let charIndex = 0;
-    const typingSpeed = 50;  // Faster typing speed
+    const typingSpeed = 50;  // Fast typing speed
     const textElement = document.getElementById('dynamic-text');
 
     function typeWriter() {
@@ -72,17 +74,17 @@
             charIndex++;
             setTimeout(typeWriter, typingSpeed);  // Fast typing
         } else {
-            // After typing is finished, fade out quickly
+            // After typing is finished, quickly fade out the text
             setTimeout(() => {
-                textElement.style.opacity = 0;  // Quick fade-out
+                textElement.style.opacity = 0;  // Fast fade-out
                 setTimeout(() => {
-                    // Switch to next text immediately after fade out
+                    // Change the text and reset typing
                     index = (index + 1) % texts.length;
                     charIndex = 0;
-                    textElement.style.opacity = 1;  // Fade in
-                    typeWriter();  // Start typing next text
-                }, 200);  // Quick fade-out duration
-            }, 100);  // Short pause before fading out
+                    textElement.style.opacity = 1;  // Fast fade-in
+                    typeWriter();  // Restart typing for next text
+                }, 200);  // Very short fade-out transition
+            }, 100);  // Minimal delay before text change
         }
     }
 
