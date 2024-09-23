@@ -54,7 +54,7 @@ Feel free to reach out if you have any questions or feedback!
 
 - **Email:** [asheedeliyangod@gmail.com]
 - **LinkedIn:** [https://www.linkedin.com/in/asheed-eliyangod/]
-- **GitHub:** []
+- **GitHub:** [https://github.com/AsheedEliyangod/AsheedEliyangod]
 
 ---
 
