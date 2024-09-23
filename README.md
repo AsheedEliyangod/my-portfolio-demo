@@ -1,7 +1,3 @@
-Here’s a sample README for your GitHub portfolio site:
-
----
-
 # My Portfolio Demo
 
 Welcome to my portfolio demo! This site showcases my work, projects, and skills as a developer and designer. It’s built with a focus on clean, responsive design and user experience.
