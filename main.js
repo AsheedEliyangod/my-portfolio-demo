@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
         event.preventDefault();
 
         // Send email via EmailJS
-        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form)
+        emailjs.sendForm('asheedeliyangod@gmail.com', 'https://asheedeliyangod.github.io/my-portfolio-demo/', form)
             .then(function(response) {
                 console.log("SUCCESS!", response.status, response.text);
                 responseMessage.textContent = "Your message has been sent successfully!";
