@@ -1,50 +1,41 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
 body{
+margin:0;
 font-family:Arial, Helvetica, sans-serif;
 background:#020617;
 color:white;
 }
 
-/* HEADER */
-
 header{
-position:absolute;
-width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:30px 10%;
-z-index:2;
+padding:20px 10%;
+background:#020617;
+position:fixed;
+width:80%;
+top:0;
+z-index:100;
 }
 
 .logo{
 font-size:24px;
+font-weight:bold;
 }
 
 nav a{
+color:white;
 margin-left:25px;
 text-decoration:none;
-color:white;
 }
-
-/* HERO */
 
 .hero{
-position:relative;
 height:100vh;
+position:relative;
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 text-align:center;
-overflow:hidden;
 }
-
-/* canvas scene */
 
 #gameCanvas{
 position:absolute;
@@ -52,20 +43,16 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-z-index:0;
+z-index:1;
 }
 
-/* hero text */
-
 .hero-content{
-position:relative;
 z-index:2;
-max-width:700px;
 }
 
 .hero h1{
-font-size:60px;
-letter-spacing:3px;
+font-size:70px;
+margin:0;
 }
 
 .hero span{
@@ -73,30 +60,48 @@ color:#38bdf8;
 }
 
 .hero p{
-margin-top:20px;
+margin-top:15px;
+font-size:18px;
 color:#cbd5f5;
 }
-
-/* buttons */
 
 .hero-buttons{
 margin-top:30px;
 }
 
 .btn{
-padding:14px 30px;
 background:#38bdf8;
-border-radius:6px;
-text-decoration:none;
+padding:15px 35px;
 color:black;
+text-decoration:none;
+border-radius:8px;
 font-weight:bold;
-margin-right:10px;
+margin-right:15px;
 }
 
 .btn-outline{
-padding:14px 30px;
 border:2px solid #38bdf8;
-border-radius:6px;
+padding:13px 35px;
 text-decoration:none;
 color:white;
+border-radius:8px;
+}
+
+section{
+padding:100px 10%;
+text-align:center;
+}
+
+.skills span{
+display:inline-block;
+background:#0f172a;
+padding:10px 20px;
+margin:10px;
+border-radius:20px;
+}
+
+footer{
+text-align:center;
+padding:30px;
+background:#020617;
 }
