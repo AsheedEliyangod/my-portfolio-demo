@@ -1,108 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASHEED ELIYANGOD - Portfolio</title>
-    <link rel="icon" type="image/x-icon" href="https://scontent.fccj3-1.fna.fbcdn.net/v/t39.30808-6/306158489_403382295302114_5230254926544276213_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=-EzS7POtYWcQ7kNvgHcUeC8&_nc_ht=scontent.fccj3-1.fna&oh=00_AYB9V9gV0Gw0DIwX5d7D7hdx53iOS7YO_moZ71VsMGLKkQ&oe=66F05D85">
-    <link rel="stylesheet" href="main.css">
-    <style>
-        .typewriter {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 3em;
-            border-right: 3px solid white;  /* Static border */
-            white-space: nowrap;
-            overflow: hidden;
-            padding: 20px;  /* Static padding */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .welcome-text {
-            font-size: 2em;
-            font-weight: bold;
-            display: block;
-        }
+<title>Asheed Eliyangod | Game Developer Portfolio</title>
 
-        #welcome {
-            background: linear-gradient(135deg, #f3ec78, #af4261);
-            padding: 50px;
-            text-align: center;
-            color: white;
-            /* Static section layout */
-        }
+<link rel="stylesheet" href="main.css">
 
-        #dynamic-text {
-            opacity: 1;
-            transition: opacity 0.2s ease-in-out;  /* Fast fade-out */
-        }
-    </style>
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#0f172a;
+color:white;
+}
+
+/* Header */
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 10%;
+background:#020617;
+}
+
+header h1{
+font-size:22px;
+margin:0;
+}
+
+header a{
+color:white;
+text-decoration:none;
+}
+
+nav ul{
+list-style:none;
+display:flex;
+gap:20px;
+margin:0;
+padding:0;
+}
+
+nav a:hover{
+color:#38bdf8;
+}
+
+/* Welcome section */
+
+#welcome{
+background:linear-gradient(135deg,#f3ec78,#af4261);
+padding:120px 20px;
+text-align:center;
+}
+
+.typewriter{
+font-family:Courier New, monospace;
+font-size:2.8em;
+border-right:3px solid white;
+display:inline-block;
+padding-right:10px;
+}
+
+.welcome-text{
+font-size:1.5rem;
+display:block;
+margin-bottom:10px;
+}
+
+#dynamic-text{
+opacity:1;
+transition:opacity .3s;
+}
+
+/* Footer */
+
+footer{
+background:#020617;
+padding:30px;
+text-align:center;
+margin-top:60px;
+}
+
+.social-links img{
+width:28px;
+margin:10px;
+filter:invert(1);
+transition:.3s;
+}
+
+.social-links img:hover{
+transform:scale(1.2);
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+header{
+flex-direction:column;
+gap:15px;
+}
+
+nav ul{
+flex-direction:column;
+align-items:center;
+}
+
+.typewriter{
+font-size:2em;
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
 
-<div class="loader visible"></div>
-
 <header>
-    <h1><a href="index.html">ASHEED ELIYANGOD</a></h1>
-    <nav>
-        <ul>
-            <li><a href="about.html">About Me</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="skills.html">Skills</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
+
+<h1><a href="index.html">ASHEED ELIYANGOD</a></h1>
+
+<nav>
+<ul>
+<li><a href="about.html">About</a></li>
+<li><a href="projects.html">Projects</a></li>
+<li><a href="skills.html">Skills</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</nav>
+
 </header>
 
 <section id="welcome">
-    <div class="typewriter">
-        <span class="welcome-text">YOUKOSO 🅴🆅🅴🆁🆈🅾🅽🅴!</span><br>
-        <span id="dynamic-text"></span>
-    </div>
+
+<div class="typewriter">
+
+<span class="welcome-text">YOUKOSO EVERYONE!</span>
+
+<span id="dynamic-text"></span>
+
+</div>
+
 </section>
 
-<script>
-    const texts = ["I am a game developer.", "I am a website developer."];
-    let index = 0;
-    let charIndex = 0;
-    const typingSpeed = 50;  // Fast typing speed
-    const textElement = document.getElementById('dynamic-text');
-
-    function typeWriter() {
-        const currentText = texts[index];
-        textElement.textContent = currentText.substring(0, charIndex);
-
-        if (charIndex < currentText.length) {
-            charIndex++;
-            setTimeout(typeWriter, typingSpeed);  // Fast typing
-        } else {
-            // After typing is finished, quickly fade out the text
-            setTimeout(() => {
-                textElement.style.opacity = 0;  // Fast fade-out
-                setTimeout(() => {
-                    // Change the text and reset typing
-                    index = (index + 1) % texts.length;
-                    charIndex = 0;
-                    textElement.style.opacity = 1;  // Fast fade-in
-                    typeWriter();  // Restart typing for next text
-                }, 200);  // Very short fade-out transition
-            }, 100);  // Minimal delay before text change
-        }
-    }
-
-    // Start the typing effect on page load
-    window.onload = typeWriter;
-</script>
-
 <footer>
-    <div class="footer-content">
-        <p>&copy; 2024 ASHEED ELIYANGOD. All rights reserved.</p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/asheed-eliyangod/" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/linkedin.png" alt="LinkedIn" /></a>
-            <a href="https://github.com/AsheedEliyangod" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/github.png" alt="GitHub" /></a>
-            <a href="https://www.youtube.com/@Solo_Rivalyt" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo" /></a>
-        </div>
-    </div>
+
+<p>© 2024 Asheed Eliyangod. All rights reserved.</p>
+
+<div class="social-links">
+
+<a href="https://www.linkedin.com/in/asheed-eliyangod/" target="_blank">
+<img src="https://img.icons8.com/ios-filled/50/linkedin.png">
+</a>
+
+<a href="https://github.com/AsheedEliyangod" target="_blank">
+<img src="https://img.icons8.com/ios-filled/50/github.png">
+</a>
+
+<a href="https://www.youtube.com/@Solo_Rivalyt" target="_blank">
+<img src="https://img.icons8.com/ios-filled/50/youtube-play.png">
+</a>
+
+</div>
+
 </footer>
 
-<script src="main.js"></script>
+<script>
+
+const texts=[
+"I am a Game Developer.",
+"I build Interactive Experiences.",
+"I develop Websites."
+];
+
+let index=0;
+let charIndex=0;
+
+const typingSpeed=70;
+const eraseSpeed=40;
+const delay=1500;
+
+const textElement=document.getElementById("dynamic-text");
+
+function type(){
+
+if(charIndex<texts[index].length){
+
+textElement.textContent+=texts[index].charAt(charIndex);
+charIndex++;
+setTimeout(type,typingSpeed);
+
+}else{
+
+setTimeout(erase,delay);
+
+}
+
+}
+
+function erase(){
+
+if(charIndex>0){
+
+textElement.textContent=texts[index].substring(0,charIndex-1);
+charIndex--;
+setTimeout(erase,eraseSpeed);
+
+}else{
+
+index++;
+
+if(index>=texts.length) index=0;
+
+setTimeout(type,typingSpeed+200);
+
+}
+
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+
+if(texts.length) setTimeout(type,500);
+
+});
+
+</script>
+
 </body>
 </html>
