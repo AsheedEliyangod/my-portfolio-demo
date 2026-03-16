@@ -9,31 +9,95 @@
 
 <link rel="stylesheet" href="main.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+<style>
+
+body{
+margin:0;
+background:#020617;
+color:white;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+/* HERO */
+
+.hero{
+position:relative;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+overflow:hidden;
+}
+
+/* canvas scene */
+
+#gameCanvas{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:0;
+}
+
+/* hero text */
+
+.hero-content{
+position:relative;
+z-index:2;
+max-width:700px;
+}
+
+.hero h1{
+font-size:60px;
+letter-spacing:3px;
+}
+
+.hero span{
+color:#38bdf8;
+}
+
+.hero p{
+margin-top:15px;
+color:#cbd5f5;
+}
+
+.hero-buttons{
+margin-top:30px;
+}
+
+.btn{
+padding:14px 30px;
+background:#38bdf8;
+border-radius:6px;
+text-decoration:none;
+color:black;
+font-weight:bold;
+margin-right:10px;
+}
+
+.btn-outline{
+padding:14px 30px;
+border:2px solid #38bdf8;
+border-radius:6px;
+text-decoration:none;
+color:white;
+}
+
+</style>
 
 </head>
 
 <body>
 
-<header>
-
-<h1 class="logo">ASHEED</h1>
-
-<nav>
-<a href="#projects">Projects</a>
-<a href="#skills">Skills</a>
-<a href="#contact">Contact</a>
-</nav>
-
-</header>
-
 <section class="hero">
 
-<div class="hero-overlay"></div>
+<canvas id="gameCanvas"></canvas>
 
 <div class="hero-content">
 
-<h1>GAME DEVELOPER</h1>
+<h1>GAME <span>DEVELOPER</span></h1>
 
 <p>Creating immersive gameplay systems with Unreal Engine.</p>
 
@@ -48,67 +112,89 @@
 
 </section>
 
-<section id="projects">
+<script>
 
-<h2>Projects</h2>
+/* canvas setup */
 
-<div class="project-grid">
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-<div class="project-card">
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-<img src="images/unreal.jpg">
+/* background layers */
 
-<div class="project-info">
+let hills = [];
 
-<h3>Unreal Landscape</h3>
+for(let i=0;i<6;i++){
+hills.push({
+x:i*300,
+y:canvas.height-250,
+w:300,
+h:120
+});
+}
 
-<p>Environment built using Unreal Engine landscape tools.</p>
+/* player */
 
-</div>
+let player = {
+x:200,
+y:canvas.height-150,
+w:40,
+h:60
+};
 
-</div>
+/* animation */
 
-<div class="project-card">
+function drawScene(){
 
-<img src="images/gameplay.jpg">
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-<div class="project-info">
+/* sky gradient */
 
-<h3>Gameplay Prototype</h3>
+let gradient = ctx.createLinearGradient(0,0,0,canvas.height);
+gradient.addColorStop(0,"#020617");
+gradient.addColorStop(1,"#0f172a");
 
-<p>Experimental gameplay mechanics and systems.</p>
+ctx.fillStyle = gradient;
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-</div>
+/* hills */
 
-</div>
+ctx.fillStyle="#1e293b";
 
-</div>
+hills.forEach(h=>{
 
-</section>
+ctx.fillRect(h.x,h.y,h.w,h.h);
 
-<section id="skills">
+h.x -= 0.3;
 
-<h2>Skills</h2>
+if(h.x < -300){
+h.x = canvas.width;
+}
 
-<div class="skills">
+});
 
-<span>Unreal Engine</span>
-<span>C</span>
-<span>C#</span>
-<span>Gameplay Systems</span>
-<span>JavaScript</span>
+/* ground */
 
-</div>
+ctx.fillStyle="#111827";
+ctx.fillRect(0,canvas.height-80,canvas.width,80);
 
-</section>
+/* player */
 
-<section id="contact">
+ctx.fillStyle="#38bdf8";
+ctx.fillRect(player.x,player.y,player.w,player.h);
 
-<h2>Contact</h2>
+requestAnimationFrame(drawScene);
 
-<p>Email: asheedeliyangod@gmail.com</p>
+}
 
-<a href="https://github.com/AsheedEliyangod" target="_blank">
+drawScene();
+
+</script>
+
+</body>
+</html><a href="https://github.com/AsheedEliyangod" target="_blank">
 GitHub Profile
 </a>
 
