@@ -14,9 +14,27 @@
 
 <body>
 
+<!-- INTRO SCREEN -->
+
+<div id="intro-screen">
+
+<div class="intro-content">
+
+<h1 id="intro-text"></h1>
+
+<p class="press-start">Press Enter</p>
+
+</div>
+
+</div>
+
+<!-- MAIN WEBSITE -->
+
+<div id="site-content">
+
 <header>
 
-<h1>ASHEED ELIYANGOD</h1>
+<h1 class="logo">ASHEED</h1>
 
 <nav>
 
@@ -32,9 +50,7 @@
 
 <h2>Game Developer</h2>
 
-<p>
-Focused on gameplay systems and Unreal Engine development.
-</p>
+<p>Focused on gameplay systems and Unreal Engine development.</p>
 
 </section>
 
@@ -42,22 +58,18 @@ Focused on gameplay systems and Unreal Engine development.
 
 <h2>Projects</h2>
 
-<div class="projects-grid">
+<div class="project-grid">
 
 <div class="project">
 
-<img src="images/unreal1.jpg">
-
-<div class="project-info">
+<img src="images/unreal.jpg">
 
 <h3>Unreal Landscape Environment</h3>
 
 <p>
 Environment created using Unreal Engine landscape sculpting,
-foliage placement, and lighting.
+foliage placement and lighting.
 </p>
-
-</div>
 
 </div>
 
@@ -65,16 +77,12 @@ foliage placement, and lighting.
 
 <img src="images/gameplay.jpg">
 
-<div class="project-info">
-
 <h3>Gameplay System Prototype</h3>
 
 <p>
-Prototype gameplay mechanics built while learning
-game development concepts.
+Prototype gameplay mechanics created while learning game
+development systems.
 </p>
-
-</div>
 
 </div>
 
@@ -86,15 +94,15 @@ game development concepts.
 
 <h2>Skills</h2>
 
-<ul class="skills">
+<div class="skills">
 
-<li>Unreal Engine</li>
-<li>C</li>
-<li>C#</li>
-<li>Game Mechanics</li>
-<li>JavaScript</li>
+<span>Unreal Engine</span>
+<span>C</span>
+<span>C#</span>
+<span>JavaScript</span>
+<span>Gameplay Systems</span>
 
-</ul>
+</div>
 
 </section>
 
@@ -109,6 +117,59 @@ GitHub:
 <a href="https://github.com/AsheedEliyangod" target="_blank">
 github.com/AsheedEliyangod
 </a>
+</p>
+
+</section>
+
+<footer>
+
+<p>© 2024 Asheed Eliyangod</p>
+
+</footer>
+
+</div>
+
+<script>
+
+const text = "ASHEED ELIYANGOD";
+let i = 0;
+
+function typeIntro(){
+
+if(i < text.length){
+
+document.getElementById("intro-text").innerHTML += text.charAt(i);
+
+i++;
+
+setTimeout(typeIntro,80);
+
+}else{
+
+document.querySelector(".press-start").style.opacity = 1;
+
+}
+
+}
+
+typeIntro();
+
+document.addEventListener("keydown", function(e){
+
+if(e.key === "Enter"){
+
+document.getElementById("intro-screen").style.display = "none";
+
+document.getElementById("site-content").style.opacity = 1;
+
+}
+
+});
+
+</script>
+
+</body>
+</html></a>
 </p>
 
 </section>
