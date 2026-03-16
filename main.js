@@ -1,49 +1,144 @@
-document.addEventListener("DOMContentLoaded", function () {
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-const loader = document.querySelector(".loader");
-if(loader){
-loader.classList.remove("visible");
-document.body.style.overflow = "auto";
-}
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-/* EmailJS initialization */
-emailjs.init("YOUR_PUBLIC_KEY");
 
-/* Contact form */
+/* clouds */
 
-const form = document.getElementById("contact-form");
-const responseMessage = document.getElementById("response-message");
+let clouds=[];
 
-if(form){
+for(let i=0;i<5;i++){
 
-form.addEventListener("submit", function(event){
-
-event.preventDefault();
-
-emailjs.sendForm(
-"YOUR_SERVICE_ID",
-"YOUR_TEMPLATE_ID",
-form
-)
-
-.then(function(){
-
-responseMessage.textContent = "Message sent successfully!";
-responseMessage.style.color = "green";
-
-form.reset();
-
+clouds.push({
+x:Math.random()*canvas.width,
+y:Math.random()*200,
+speed:0.3
 })
 
-.catch(function(){
+}
 
-responseMessage.textContent = "Failed to send message.";
-responseMessage.style.color = "red";
 
-});
+/* mountains */
 
-});
+let mountains=[];
+
+for(let i=0;i<4;i++){
+
+mountains.push({
+x:i*400,
+y:canvas.height-250,
+w:400,
+h:200
+})
 
 }
 
+
+/* trees */
+
+let trees=[];
+
+for(let i=0;i<8;i++){
+
+trees.push({
+x:i*200,
+y:canvas.height-180
+})
+
+}
+
+
+/* player */
+
+let player={
+x:100,
+y:canvas.height-160,
+w:40,
+h:60
+}
+
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+
+/* sky */
+
+let gradient=ctx.createLinearGradient(0,0,0,canvas.height);
+
+gradient.addColorStop(0,"#020617");
+gradient.addColorStop(1,"#0f172a");
+
+ctx.fillStyle=gradient;
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+
+/* clouds */
+
+ctx.fillStyle="#1e293b";
+
+clouds.forEach(c=>{
+
+ctx.beginPath();
+ctx.arc(c.x,c.y,40,0,Math.PI*2);
+ctx.fill();
+
+c.x-=c.speed;
+
+if(c.x<-50){
+c.x=canvas.width+50
+}
+
 });
+
+
+/* mountains */
+
+ctx.fillStyle="#111827";
+
+mountains.forEach(m=>{
+
+ctx.beginPath();
+ctx.moveTo(m.x,m.y+m.h);
+ctx.lineTo(m.x+m.w/2,m.y);
+ctx.lineTo(m.x+m.w,m.y+m.h);
+ctx.fill();
+
+});
+
+
+/* trees */
+
+ctx.fillStyle="#16a34a";
+
+trees.forEach(t=>{
+
+ctx.fillRect(t.x,t.y,20,80);
+
+ctx.beginPath();
+ctx.arc(t.x+10,t.y,40,0,Math.PI*2);
+ctx.fill();
+
+});
+
+
+/* ground */
+
+ctx.fillStyle="#020617";
+ctx.fillRect(0,canvas.height-100,canvas.width,100);
+
+
+/* player */
+
+ctx.fillStyle="#38bdf8";
+ctx.fillRect(player.x,player.y,player.w,player.h);
+
+
+requestAnimationFrame(draw);
+
+}
+
+draw();
