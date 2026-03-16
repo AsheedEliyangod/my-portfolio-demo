@@ -43,7 +43,7 @@ overflow:hidden;
 }
 
 
-/* CANVAS GAME SCENE */
+/* GAME CANVAS */
 
 #gameCanvas{
 position:absolute;
@@ -121,69 +121,4 @@ footer{
 text-align:center;
 padding:40px;
 background:#020617;
-}text-decoration:none;
-font-weight:bold;
-margin-right:20px;
-transition:0.3s;
 }
-
-.btn:hover{
-transform:scale(1.05);
-}
-
-.btn-outline{
-border:2px solid #38bdf8;
-padding:13px 40px;
-border-radius:8px;
-text-decoration:none;
-color:white;
-transition:0.3s;
-}
-
-.btn-outline:hover{
-background:#38bdf8;
-color:black;
-}
-
-
-/* SECTIONS */
-
-section{
-padding:120px 10%;
-text-align:center;
-}
-
-h2{
-font-size:40px;
-margin-bottom:40px;
-}
-
-
-/* PROJECT CARD */
-
-.project-card{
-background:#0f172a;
-padding:40px;
-border-radius:12px;
-max-width:500px;
-margin:auto;
-}
-
-
-/* SKILLS */
-
-.skills span{
-display:inline-block;
-background:#0f172a;
-padding:12px 22px;
-margin:10px;
-border-radius:30px;
-}
-
-
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:40px;
-background:#020617;
