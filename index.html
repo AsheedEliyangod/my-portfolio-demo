@@ -1,142 +1,252 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!DOCTYPE html><html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asheed Eliyangod | Game Developer</title><style>
 
-<title>Asheed Eliyangod | Game Developer</title>
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-<link rel="stylesheet" href="main.css">
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:#0f172a;
+color:white;
+line-height:1.6;
+}
 
-</head>
+/* PARTICLE BACKGROUND */
+#particles-js{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:-1;
+}
 
-<body>
+/* HEADER */
 
-<header>
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 10%;
+background:#020617;
+position:sticky;
+top:0;
+}
 
-<div class="logo">ASHEED</div>
+.logo{
+font-weight:bold;
+font-size:22px;
+}
 
-<nav>
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+transition:0.3s;
+}
+
+nav a:hover{
+color:#38bdf8;
+}
+
+/* HERO */
+
+.hero{
+height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero h1{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.hero span{
+color:#38bdf8;
+text-shadow:0 0 8px #38bdf8;
+}
+
+.hero p{
+color:#cbd5f5;
+margin-bottom:25px;
+}
+
+/* BUTTONS */
+
+.buttons{
+display:flex;
+gap:15px;
+}
+
+.btn{
+padding:12px 25px;
+background:#38bdf8;
+color:black;
+text-decoration:none;
+border-radius:6px;
+font-weight:bold;
+box-shadow:0 0 15px #38bdf8;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.05);
+box-shadow:0 0 25px #38bdf8;
+}
+
+/* SECTIONS */
+
+section{
+padding:80px 10%;
+text-align:center;
+}
+
+section h2{
+margin-bottom:30px;
+font-size:32px;
+}
+
+/* PROJECTS */
+
+.projects{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:#1e293b;
+padding:25px;
+border-radius:10px;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+.card a{
+color:#38bdf8;
+text-decoration:none;
+}
+
+/* SKILLS */
+
+.skills{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+}
+
+.skills span{
+background:#1e293b;
+padding:10px 20px;
+border-radius:20px;
+}
+
+/* FOOTER */
+
+footer{
+background:#020617;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:30px;
+}
+
+.buttons{
+flex-direction:column;
+}
+
+}
+
+</style></head><body><div id="particles-js"></div><header><div class="logo">ASHEED</div><nav>
 <ul>
 <li><a href="#about">About</a></li>
 <li><a href="#projects">Projects</a></li>
 <li><a href="#skills">Skills</a></li>
 <li><a href="#contact">Contact</a></li>
 </ul>
-</nav>
-
-</header>
-
-<section class="hero">
-
-<h1>Hello, I'm <span>Asheed Eliyangod</span></h1>
-
-<p>
-Aspiring Game Developer focused on Unreal Engine and gameplay programming.
-</p>
-
-<div class="hero-buttons">
-
+</nav></header><section class="hero"><h1><span id="typing"></span></h1><p>Aspiring Game Developer focused on Unreal Engine and gameplay programming.</p><div class="buttons">
 <a href="#projects" class="btn">View Projects</a>
-
-<a href="#contact" class="btn-outline">Contact Me</a>
-
-</div>
-
-</section>
-
-<section id="about">
-
-<h2>About Me</h2>
-
-<p>
+<a href="#contact" class="btn">Contact Me</a>
+</div></section><section id="about"><h2>About Me</h2><p>
 I am an aspiring game developer passionate about creating interactive
-experiences. I enjoy learning Unreal Engine, programming gameplay
-mechanics, and experimenting with game systems.
-</p>
-
-</section>
-
-<section id="projects">
-
-<h2>Projects</h2>
-
-<div class="project-grid">
-
-<div class="project-card">
-
-<h3>Timer Web App</h3>
-
-<p>Simple timer created using JavaScript.</p>
-
-<a href="https://akshay-k-a-dev.github.io/timer/" target="_blank">
+experiences using Unreal Engine and programming gameplay systems.
+</p></section><section id="projects"><h2>Game Projects</h2><div class="projects"><div class="card"><h3>Timer Web App</h3><p>Simple timer created using JavaScript.</p><a href="https://akshay-k-a-dev.github.io/timer/" target="_blank">
 View Project
-</a>
-
-</div>
-
-<div class="project-card">
-
-<h3>Unreal Environment</h3>
-
-<p>
-Game environment created using Unreal Engine landscape tools.
-</p>
-
-</div>
-
-<div class="project-card">
-
-<h3>Gameplay Prototype</h3>
-
-<p>
-Experimental gameplay mechanics built while learning Unreal Engine.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="skills">
-
-<h2>Skills</h2>
-
-<div class="skills">
-
-<span>🎮 Unreal Engine</span>
+</a></div><div class="card"><h3>Unreal Environment</h3><p>Game environment created using Unreal Engine landscape tools.</p></div><div class="card"><h3>Gameplay Prototype</h3><p>Experimental gameplay mechanics created while learning Unreal Engine.</p></div></div></section><section id="skills"><h2>Skills</h2><div class="skills"><span>🎮 Unreal Engine</span>
 <span>💻 C</span>
 <span>⚙ C#</span>
 <span>🌐 JavaScript</span>
 <span>🧠 Git</span>
 
-</div>
-
-</section>
-
-<section id="contact">
-
-<h2>Contact</h2>
-
-<p>Email: asheedeliyangod@gmail.com</p>
-
-<p>
+</div></section><section id="contact"><h2>Contact</h2><p>Email: asheedeliyangod@gmail.com</p><p>
 GitHub:
 <a href="https://github.com/AsheedEliyangod" target="_blank">
 github.com/AsheedEliyangod
 </a>
-</p>
+</p></section><footer><p>© 2024 Asheed Eliyangod</p></footer><script src="https://cdn.jsdelivr.net/npm/particles.js"></script><script>
 
-</section>
+particlesJS("particles-js",{
+particles:{
+number:{value:70},
+size:{value:3},
+color:{value:"#38bdf8"},
+line_linked:{
+enable:true,
+distance:150,
+color:"#38bdf8",
+opacity:0.4
+},
+move:{speed:2}
+}
+});
 
-<footer>
+/* typing animation */
 
-<p>© 2024 Asheed Eliyangod</p>
+const text="Hello, I'm Asheed Eliyangod";
+let i=0;
 
-</footer>
+function typing(){
 
-</body>
+if(i<text.length){
+
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,80);
+
+}
+
+}
+
+typing();
+
+</script></body>
 </html>
