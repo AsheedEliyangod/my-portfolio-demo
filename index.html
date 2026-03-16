@@ -1,122 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Asheed Eliyangod | Game Developer Portfolio</title>
+<title>Asheed Eliyangod | Game Developer</title>
 
-<link rel="stylesheet" href="main.css">
-
-<style>
-
-body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#0f172a;
-color:white;
-}
-
-/* Header */
-
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 10%;
-background:#020617;
-}
-
-header h1{
-font-size:22px;
-margin:0;
-}
-
-header a{
-color:white;
-text-decoration:none;
-}
-
-nav ul{
-list-style:none;
-display:flex;
-gap:20px;
-margin:0;
-padding:0;
-}
-
-nav a:hover{
-color:#38bdf8;
-}
-
-/* Welcome section */
-
-#welcome{
-background:linear-gradient(135deg,#f3ec78,#af4261);
-padding:120px 20px;
-text-align:center;
-}
-
-.typewriter{
-font-family:Courier New, monospace;
-font-size:2.8em;
-border-right:3px solid white;
-display:inline-block;
-padding-right:10px;
-}
-
-.welcome-text{
-font-size:1.5rem;
-display:block;
-margin-bottom:10px;
-}
-
-#dynamic-text{
-opacity:1;
-transition:opacity .3s;
-}
-
-/* Footer */
-
-footer{
-background:#020617;
-padding:30px;
-text-align:center;
-margin-top:60px;
-}
-
-.social-links img{
-width:28px;
-margin:10px;
-filter:invert(1);
-transition:.3s;
-}
-
-.social-links img:hover{
-transform:scale(1.2);
-}
-
-/* Mobile */
-
-@media(max-width:768px){
-
-header{
-flex-direction:column;
-gap:15px;
-}
-
-nav ul{
-flex-direction:column;
-align-items:center;
-}
-
-.typewriter{
-font-size:2em;
-}
-
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -124,113 +15,92 @@ font-size:2em;
 
 <header>
 
-<h1><a href="index.html">ASHEED ELIYANGOD</a></h1>
+<div class="logo">ASHEED</div>
 
 <nav>
 <ul>
-<li><a href="about.html">About</a></li>
-<li><a href="projects.html">Projects</a></li>
-<li><a href="skills.html">Skills</a></li>
-<li><a href="contact.html">Contact</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#contact">Contact</a></li>
 </ul>
 </nav>
 
 </header>
 
-<section id="welcome">
+<section class="hero">
 
-<div class="typewriter">
+<h1>Hello, I'm <span>Asheed Eliyangod</span></h1>
 
-<span class="welcome-text">YOUKOSO EVERYONE!</span>
+<p>Aspiring Game Developer focused on Unreal Engine and gameplay programming.</p>
 
-<span id="dynamic-text"></span>
+<a href="#projects" class="btn">View Projects</a>
+
+</section>
+
+<section id="about">
+
+<h2>About Me</h2>
+
+<p>
+I am an aspiring game developer passionate about creating interactive
+experiences. I enjoy learning Unreal Engine, programming gameplay
+mechanics, and experimenting with game systems.
+</p>
+
+</section>
+
+<section id="projects">
+
+<h2>Projects</h2>
+
+<div class="project-grid">
+
+<div class="project-card">
+<h3>Timer Web App</h3>
+<p>Simple timer created using JavaScript.</p>
+<a href="https://akshay-k-a-dev.github.io/timer/" target="_blank">View Project</a>
+</div>
+
+<div class="project-card">
+<h3>Unreal Environment</h3>
+<p>Game environment created using Unreal Engine landscape tools.</p>
+</div>
 
 </div>
 
 </section>
 
-<footer>
+<section id="skills">
 
-<p>© 2024 Asheed Eliyangod. All rights reserved.</p>
+<h2>Skills</h2>
 
-<div class="social-links">
+<div class="skills">
 
-<a href="https://www.linkedin.com/in/asheed-eliyangod/" target="_blank">
-<img src="https://img.icons8.com/ios-filled/50/linkedin.png">
-</a>
-
-<a href="https://github.com/AsheedEliyangod" target="_blank">
-<img src="https://img.icons8.com/ios-filled/50/github.png">
-</a>
-
-<a href="https://www.youtube.com/@Solo_Rivalyt" target="_blank">
-<img src="https://img.icons8.com/ios-filled/50/youtube-play.png">
-</a>
+<span>Unreal Engine</span>
+<span>C</span>
+<span>C#</span>
+<span>JavaScript</span>
+<span>Git</span>
 
 </div>
 
+</section>
+
+<section id="contact">
+
+<h2>Contact</h2>
+
+<p>Email: yourmail@example.com</p>
+
+</section>
+
+<footer>
+
+<p>© 2024 Asheed Eliyangod</p>
+
 </footer>
 
-<script>
-
-const texts=[
-"I am a Game Developer.",
-"I build Interactive Experiences.",
-"I develop Websites."
-];
-
-let index=0;
-let charIndex=0;
-
-const typingSpeed=70;
-const eraseSpeed=40;
-const delay=1500;
-
-const textElement=document.getElementById("dynamic-text");
-
-function type(){
-
-if(charIndex<texts[index].length){
-
-textElement.textContent+=texts[index].charAt(charIndex);
-charIndex++;
-setTimeout(type,typingSpeed);
-
-}else{
-
-setTimeout(erase,delay);
-
-}
-
-}
-
-function erase(){
-
-if(charIndex>0){
-
-textElement.textContent=texts[index].substring(0,charIndex-1);
-charIndex--;
-setTimeout(erase,eraseSpeed);
-
-}else{
-
-index++;
-
-if(index>=texts.length) index=0;
-
-setTimeout(type,typingSpeed+200);
-
-}
-
-}
-
-document.addEventListener("DOMContentLoaded",function(){
-
-if(texts.length) setTimeout(type,500);
-
-});
-
-</script>
-
 </body>
+
 </html>
