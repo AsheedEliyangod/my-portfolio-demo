@@ -1,101 +1,196 @@
-x<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - ASHEED ELIYANGOD</title>
-    <link rel="stylesheet" href="main.css">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            overflow: auto; /* Ensure scrolling is enabled */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header {
-            background: #333;
-            color: white;
-            padding: 10px 20px;
-        }
+<title>Contact | Asheed Eliyangod</title>
 
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
+<link rel="stylesheet" href="main.css">
 
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
+<style>
 
-        section {
-            padding: 20px;
-        }
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#0f172a;
+color:white;
+}
 
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            max-width: 400px;
-            margin: 0 auto;
-        }
+/* Header */
 
-        .contact-form input, 
-        .contact-form textarea {
-            margin-bottom: 10px;
-            padding: 10px;
-            font-size: 16px;
-        }
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 10%;
+background:#020617;
+}
 
-        .contact-form button {
-            padding: 10px;
-            font-size: 16px;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .social-links img {
-            width: 24px;
-            height: 24px;
-            margin: 0 10px;
-        }
-    </style>
+header h1{
+margin:0;
+font-size:22px;
+}
+
+header a{
+color:white;
+text-decoration:none;
+}
+
+nav ul{
+list-style:none;
+display:flex;
+gap:20px;
+margin:0;
+padding:0;
+}
+
+nav a:hover{
+color:#38bdf8;
+}
+
+/* Contact Section */
+
+#contact{
+padding:80px 10%;
+text-align:center;
+}
+
+.contact-form{
+display:flex;
+flex-direction:column;
+max-width:500px;
+margin:auto;
+gap:15px;
+}
+
+.contact-form input,
+.contact-form textarea{
+padding:12px;
+font-size:16px;
+border:none;
+border-radius:6px;
+}
+
+.contact-form button{
+padding:12px;
+font-size:16px;
+border:none;
+border-radius:6px;
+background:#38bdf8;
+color:black;
+cursor:pointer;
+font-weight:bold;
+transition:.3s;
+}
+
+.contact-form button:hover{
+background:#0ea5e9;
+}
+
+/* Footer */
+
+footer{
+background:#020617;
+padding:30px;
+text-align:center;
+margin-top:60px;
+}
+
+.social-links img{
+width:28px;
+margin:10px;
+filter:invert(1);
+transition:.3s;
+}
+
+.social-links img:hover{
+transform:scale(1.2);
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+nav ul{
+flex-direction:column;
+align-items:center;
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
 
 <header>
-    <h1><a href="index.html">ASHEED ELIYANGOD</a></h1>
-    <nav>
-        <ul>
-            <li><a href="about.html">About Me</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="skills.html">Skills</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
+
+<h1><a href="index.html">ASHEED ELIYANGOD</a></h1>
+
+<nav>
+<ul>
+<li><a href="about.html">About</a></li>
+<li><a href="projects.html">Projects</a></li>
+<li><a href="skills.html">Skills</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</nav>
+
 </header>
 
 <section id="contact">
-    <h2>Contact Me</h2>
-    <form class="contact-form">
-        <input type="text" placeholder="Your Name" required>
-        <input type="email" placeholder="Your Email" required>
-        <textarea placeholder="Your Message" rows="5" required></textarea>
-        <button type="submit">Send Message</button>
-    </form>
+
+<h2>Contact Me</h2>
+
+<form class="contact-form">
+
+<input type="text" placeholder="Your Name" required>
+
+<input type="email" placeholder="Your Email" required>
+
+<textarea rows="5" placeholder="Your Message" required></textarea>
+
+<button type="submit">Send Message</button>
+
+</form>
+
 </section>
 
 <footer>
-    <div class="footer-content">
-        <p>&copy; 2024 ASHEED ELIYANGOD. All rights reserved.</p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/asheed-eliyangod/" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/linkedin.png" alt="LinkedIn" /></a>
-            <a href="https://github.com/AsheedEliyangod" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/github.png" alt="GitHub" /></a>
-            <a href="https://www.youtube.com/@Solo_Rivalyt" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo"></a>
-        </div>
-    </div>
+
+<p>© 2024 Asheed Eliyangod. All rights reserved.</p>
+
+<div class="social-links">
+
+<a href="https://www.linkedin.com/in/asheed-eliyangod/" target="_blank">
+<img src="https://img.icons8.com/ios-filled/50/linkedin.png">
+</a>
+
+<a href="https://github.com/AsheedEliyangod" target="_blank">
+<img src="https://img.icons8.com/ios-filled/50/github.png">
+</a>
+
+<a href="https://www.youtube.com/@Solo_Rivalyt" target="_blank">
+<img src="https://img.icons8.com/ios-filled/50/youtube-play.png">
+</a>
+
+</div>
+
 </footer>
 
-<script src="main.js"></script>
+<script>
+
+document.querySelector(".contact-form").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+alert("Message sent successfully!");
+
+});
+
+</script>
+
 </body>
 </html>
