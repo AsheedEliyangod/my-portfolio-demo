@@ -44,7 +44,7 @@ text-align:center;
 overflow:hidden;
 }
 
-/* canvas */
+/* canvas scene */
 
 #gameCanvas{
 position:absolute;
@@ -55,7 +55,7 @@ height:100%;
 z-index:0;
 }
 
-/* hero content */
+/* hero text */
 
 .hero-content{
 position:relative;
