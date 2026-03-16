@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -9,87 +10,21 @@
 
 <link rel="stylesheet" href="main.css">
 
-<style>
-
-body{
-margin:0;
-background:#020617;
-color:white;
-font-family:Arial, Helvetica, sans-serif;
-}
-
-/* HERO */
-
-.hero{
-position:relative;
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-overflow:hidden;
-}
-
-/* canvas scene */
-
-#gameCanvas{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:0;
-}
-
-/* hero text */
-
-.hero-content{
-position:relative;
-z-index:2;
-max-width:700px;
-}
-
-.hero h1{
-font-size:60px;
-letter-spacing:3px;
-}
-
-.hero span{
-color:#38bdf8;
-}
-
-.hero p{
-margin-top:15px;
-color:#cbd5f5;
-}
-
-.hero-buttons{
-margin-top:30px;
-}
-
-.btn{
-padding:14px 30px;
-background:#38bdf8;
-border-radius:6px;
-text-decoration:none;
-color:black;
-font-weight:bold;
-margin-right:10px;
-}
-
-.btn-outline{
-padding:14px 30px;
-border:2px solid #38bdf8;
-border-radius:6px;
-text-decoration:none;
-color:white;
-}
-
-</style>
-
 </head>
 
 <body>
+
+<header>
+
+<h1 class="logo">ASHEED</h1>
+
+<nav>
+<a href="#projects">Projects</a>
+<a href="#skills">Skills</a>
+<a href="#contact">Contact</a>
+</nav>
+
+</header>
 
 <section class="hero">
 
@@ -114,97 +49,181 @@ color:white;
 
 <script>
 
-/* canvas setup */
-
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-/* background layers */
+/* load sprite */
 
-let hills = [];
+const playerSprite = new Image();
+playerSprite.src = "images/player-walk.png";
 
-for(let i=0;i<6;i++){
-hills.push({
-x:i*300,
-y:canvas.height-250,
-w:300,
-h:120
+/* clouds */
+
+let clouds = [];
+
+for(let i=0;i<5;i++){
+clouds.push({
+x:Math.random()*canvas.width,
+y:Math.random()*200,
+speed:0.2 + Math.random()*0.3
 });
 }
 
-/* player */
+/* mountains */
 
-let player = {
+let mountains = [];
+
+for(let i=0;i<4;i++){
+mountains.push({
+x:i*400,
+y:canvas.height-350,
+w:400,
+h:200
+});
+}
+
+/* trees */
+
+let trees=[];
+
+for(let i=0;i<6;i++){
+trees.push({
+x:i*300,
+y:canvas.height-200
+});
+}
+
+/* player animation */
+
+let frame=0;
+let frameCount=6;
+
+let player={
 x:200,
-y:canvas.height-150,
-w:40,
-h:60
+y:canvas.height-180,
+w:72,
+h:72
 };
 
-/* animation */
+/* draw loop */
 
-function drawScene(){
+function draw(){
 
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
-/* sky gradient */
+/* sky */
 
 let gradient = ctx.createLinearGradient(0,0,0,canvas.height);
 gradient.addColorStop(0,"#020617");
 gradient.addColorStop(1,"#0f172a");
 
-ctx.fillStyle = gradient;
+ctx.fillStyle=gradient;
 ctx.fillRect(0,0,canvas.width,canvas.height);
 
-/* hills */
+/* clouds */
 
 ctx.fillStyle="#1e293b";
 
-hills.forEach(h=>{
+clouds.forEach(c=>{
+ctx.beginPath();
+ctx.arc(c.x,c.y,30,0,Math.PI*2);
+ctx.fill();
 
-ctx.fillRect(h.x,h.y,h.w,h.h);
+c.x-=c.speed;
 
-h.x -= 0.3;
+if(c.x<-50){
+c.x=canvas.width+50;
+}
+});
 
-if(h.x < -300){
-h.x = canvas.width;
+/* mountains */
+
+ctx.fillStyle="#111827";
+
+mountains.forEach(m=>{
+
+ctx.beginPath();
+
+ctx.moveTo(m.x,m.y+m.h);
+ctx.lineTo(m.x+m.w/2,m.y);
+ctx.lineTo(m.x+m.w,m.y+m.h);
+
+ctx.fill();
+
+m.x-=0.2;
+
+if(m.x<-400){
+m.x=canvas.width;
+}
+
+});
+
+/* trees */
+
+ctx.fillStyle="#1e293b";
+
+trees.forEach(t=>{
+
+ctx.fillRect(t.x,t.y,20,80);
+
+ctx.beginPath();
+ctx.arc(t.x+10,t.y,40,0,Math.PI*2);
+ctx.fill();
+
+t.x-=0.8;
+
+if(t.x<-50){
+t.x=canvas.width;
 }
 
 });
 
 /* ground */
 
-ctx.fillStyle="#111827";
-ctx.fillRect(0,canvas.height-80,canvas.width,80);
+ctx.fillStyle="#020617";
+ctx.fillRect(0,canvas.height-100,canvas.width,100);
 
-/* player */
+/* player sprite */
 
-ctx.fillStyle="#38bdf8";
-ctx.fillRect(player.x,player.y,player.w,player.h);
+ctx.drawImage(
+playerSprite,
+frame*72,
+0,
+72,
+72,
+player.x,
+player.y,
+player.w,
+player.h
+);
 
-requestAnimationFrame(drawScene);
+frame++;
+
+if(frame>=frameCount){
+frame=0;
+}
+
+requestAnimationFrame(draw);
 
 }
 
-drawScene();
+setInterval(()=>{
+
+frame++;
+
+if(frame>=frameCount){
+frame=0;
+}
+
+},120);
+
+draw();
 
 </script>
 
 </body>
-</html><a href="https://github.com/AsheedEliyangod" target="_blank">
-GitHub Profile
-</a>
 
-</section>
-
-<footer>
-
-<p>© 2024 Asheed Eliyangod</p>
-
-</footer>
-
-</body>
 </html>
