@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -55,60 +54,100 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-/* load sprite */
+/* CC0 FREE ASSETS */
 
-const playerSprite = new Image();
-playerSprite.src = "images/player-walk.png";
+const player = new Image();
+player.src="https://raw.githubusercontent.com/kenneyNL/kenney-assets/master/2d-platformer/character_robot_idle.png";
 
-/* clouds */
+const cloud = new Image();
+cloud.src="https://raw.githubusercontent.com/kenneyNL/kenney-assets/master/background-elements/cloud1.png";
 
-let clouds = [];
+const tree = new Image();
+tree.src="https://raw.githubusercontent.com/kenneyNL/kenney-assets/master/background-elements/tree.png";
 
-for(let i=0;i<5;i++){
+/* objects */
+
+let clouds=[];
+for(let i=0;i<4;i++){
 clouds.push({
 x:Math.random()*canvas.width,
 y:Math.random()*200,
-speed:0.2 + Math.random()*0.3
+speed:0.3
 });
 }
 
-/* mountains */
-
-let mountains = [];
-
-for(let i=0;i<4;i++){
-mountains.push({
-x:i*400,
-y:canvas.height-350,
-w:400,
-h:200
+let trees=[];
+for(let i=0;i<6;i++){
+trees.push({
+x:i*250,
+y:canvas.height-220
 });
 }
+
+/* animation */
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+/* sky gradient */
+
+let gradient=ctx.createLinearGradient(0,0,0,canvas.height);
+
+gradient.addColorStop(0,"#020617");
+gradient.addColorStop(1,"#0f172a");
+
+ctx.fillStyle=gradient;
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+/* clouds */
+
+clouds.forEach(c=>{
+
+ctx.drawImage(cloud,c.x,c.y,120,60);
+
+c.x-=c.speed;
+
+if(c.x<-120){
+c.x=canvas.width;
+}
+
+});
+
+/* ground */
+
+ctx.fillStyle="#020617";
+ctx.fillRect(0,canvas.height-100,canvas.width,100);
 
 /* trees */
 
-let trees=[];
+trees.forEach(t=>{
 
-for(let i=0;i<6;i++){
-trees.push({
-x:i*300,
-y:canvas.height-200
-});
+ctx.drawImage(tree,t.x,t.y,120,180);
+
+t.x-=1;
+
+if(t.x<-120){
+t.x=canvas.width;
 }
 
-/* player animation */
+});
 
-let frame=0;
-let frameCount=6;
+/* player */
 
-let player={
-x:200,
-y:canvas.height-180,
-w:72,
-h:72
-};
+ctx.drawImage(player,200,canvas.height-170,80,80);
 
-/* draw loop */
+requestAnimationFrame(draw);
+
+}
+
+draw();
+
+</script>
+
+</body>
+
+</html>/* draw loop */
 
 function draw(){
 
