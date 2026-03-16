@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -18,12 +19,15 @@
 <h1 class="logo">ASHEED</h1>
 
 <nav>
+
 <a href="#projects">Projects</a>
 <a href="#skills">Skills</a>
 <a href="#contact">Contact</a>
+
 </nav>
 
 </header>
+
 
 <section class="hero">
 
@@ -46,69 +50,63 @@
 
 </section>
 
-<script>
 
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+<section id="projects">
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+<h2>Projects</h2>
 
-/* CC0 FREE ASSETS */
+<div class="project">
 
-const player = new Image();
-player.src="https://raw.githubusercontent.com/kenneyNL/kenney-assets/master/2d-platformer/character_robot_idle.png";
+<h3>Unreal Landscape Environment</h3>
 
-const cloud = new Image();
-cloud.src="https://raw.githubusercontent.com/kenneyNL/kenney-assets/master/background-elements/cloud1.png";
+<p>
+Environment created using Unreal Engine landscape sculpting,
+foliage placement and lighting.
+</p>
 
-const tree = new Image();
-tree.src="https://raw.githubusercontent.com/kenneyNL/kenney-assets/master/background-elements/tree.png";
+</div>
 
-/* objects */
+</section>
 
-let clouds=[];
-for(let i=0;i<4;i++){
-clouds.push({
-x:Math.random()*canvas.width,
-y:Math.random()*200,
-speed:0.3
-});
-}
 
-let trees=[];
-for(let i=0;i<6;i++){
-trees.push({
-x:i*250,
-y:canvas.height-220
-});
-}
+<section id="skills">
 
-/* animation */
+<h2>Skills</h2>
 
-function draw(){
+<div class="skills">
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+<span>Unreal Engine</span>
+<span>C</span>
+<span>C#</span>
+<span>JavaScript</span>
+<span>Git</span>
 
-/* sky gradient */
+</div>
 
-let gradient=ctx.createLinearGradient(0,0,0,canvas.height);
+</section>
 
-gradient.addColorStop(0,"#020617");
-gradient.addColorStop(1,"#0f172a");
 
-ctx.fillStyle=gradient;
-ctx.fillRect(0,0,canvas.width,canvas.height);
+<section id="contact">
 
-/* clouds */
+<h2>Contact</h2>
 
-clouds.forEach(c=>{
+<p>Email: asheedeliyangod@gmail.com</p>
+<p>GitHub: github.com/AsheedEliyangod</p>
 
-ctx.drawImage(cloud,c.x,c.y,120,60);
+</section>
 
-c.x-=c.speed;
 
-if(c.x<-120){
+<footer>
+
+<p>© 2024 Asheed Eliyangod</p>
+
+</footer>
+
+
+<script src="main.js"></script>
+
+</body>
+</html>if(c.x<-120){
 c.x=canvas.width;
 }
 
