@@ -1,15 +1,33 @@
-body{
+/* Global */
+
+*{
 margin:0;
-font-family:Arial,Helvetica,sans-serif;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial, Helvetica, sans-serif;
 background:#0f172a;
 color:white;
+line-height:1.6;
 }
+
+/* Header */
 
 header{
 display:flex;
 justify-content:space-between;
+align-items:center;
 padding:20px 10%;
 background:#020617;
+position:sticky;
+top:0;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
 }
 
 nav ul{
@@ -19,9 +37,17 @@ list-style:none;
 }
 
 nav a{
-color:white;
 text-decoration:none;
+color:white;
+font-weight:500;
+transition:0.3s;
 }
+
+nav a:hover{
+color:#38bdf8;
+}
+
+/* Hero */
 
 .hero{
 height:80vh;
@@ -30,25 +56,52 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
+padding:20px;
+}
+
+.hero h1{
+font-size:42px;
+margin-bottom:10px;
 }
 
 .hero span{
 color:#38bdf8;
 }
 
+.hero p{
+color:#cbd5f5;
+margin-bottom:20px;
+}
+
+/* Button */
+
 .btn{
-margin-top:20px;
 padding:10px 20px;
 background:#38bdf8;
 color:black;
 text-decoration:none;
-border-radius:5px;
+border-radius:6px;
+font-weight:bold;
+transition:0.3s;
 }
+
+.btn:hover{
+background:#0ea5e9;
+}
+
+/* Sections */
 
 section{
 padding:80px 10%;
 text-align:center;
 }
+
+section h2{
+margin-bottom:30px;
+font-size:32px;
+}
+
+/* Projects */
 
 .project-grid{
 display:grid;
@@ -58,15 +111,29 @@ gap:20px;
 
 .project-card{
 background:#1e293b;
-padding:20px;
+padding:25px;
 border-radius:10px;
+transition:0.3s;
 }
+
+.project-card:hover{
+transform:translateY(-5px);
+}
+
+.project-card a{
+display:inline-block;
+margin-top:10px;
+color:#38bdf8;
+text-decoration:none;
+}
+
+/* Skills */
 
 .skills{
 display:flex;
 flex-wrap:wrap;
-gap:15px;
 justify-content:center;
+gap:15px;
 }
 
 .skills span{
@@ -75,8 +142,35 @@ padding:10px 20px;
 border-radius:20px;
 }
 
+/* Contact */
+
+#contact p{
+font-size:18px;
+}
+
+/* Footer */
+
 footer{
+background:#020617;
 text-align:center;
 padding:20px;
-background:#020617;
+margin-top:40px;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:32px;
+}
+
+nav ul{
+gap:15px;
+}
+
+section{
+padding:60px 20px;
+}
+
 }
