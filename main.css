@@ -1,264 +1,82 @@
-body {
-font-family: Arial, sans-serif;
-margin: 0;
-padding: 0;
-background: linear-gradient(135deg,#1A3636,#40534C,#677D6A,#D6BD98);
-line-height: 1.6;
-overflow-x: hidden;
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#0f172a;
+color:white;
 }
-
-/* HEADER */
 
 header{
-background:rgba(51,51,51,0.85);
-color:white;
-padding:20px;
-text-align:center;
-transition:border .3s;
-}
-
-header:hover{
-border:2px solid #4CAF50;
-}
-
-header h1 a{
-color:white;
-text-decoration:none;
-font-size:2em;
-}
-
-header h1 a:hover{
-color:#ffd700;
-}
-
-/* NAVIGATION */
-
-nav{
-margin-top:10px;
+display:flex;
+justify-content:space-between;
+padding:20px 10%;
+background:#020617;
 }
 
 nav ul{
-list-style:none;
-padding:0;
-margin:0;
 display:flex;
-justify-content:center;
 gap:25px;
+list-style:none;
 }
 
 nav a{
 color:white;
 text-decoration:none;
-font-weight:bold;
-transition:color .3s;
 }
 
-nav a:hover{
-color:#ffd700;
+.hero{
+height:80vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
 }
 
-/* CONTAINER */
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
+.hero span{
+color:#38bdf8;
 }
 
-/* SECTIONS */
+.btn{
+margin-top:20px;
+padding:10px 20px;
+background:#38bdf8;
+color:black;
+text-decoration:none;
+border-radius:5px;
+}
 
 section{
-background:rgba(255,255,255,0.9);
-margin:20px;
-padding:25px;
-border-radius:8px;
-box-shadow:0 2px 8px rgba(0,0,0,0.15);
+padding:80px 10%;
+text-align:center;
 }
 
-h2{
-color:#333;
-}
-
-/* ABOUT LAYOUT */
-
-.row{
-display:flex;
-flex-wrap:wrap;
-gap:30px;
-align-items:center;
-}
-
-.col-md-6{
-flex:1 1 45%;
-}
-
-.profile-image{
-width:100%;
-max-width:400px;
-border-radius:8px;
-}
-
-/* TEXT */
-
-.text-content{
-font-size:16px;
-}
-
-/* PROJECTS */
-
-.project{
-display:flex;
-flex-wrap:wrap;
-margin:20px 0;
-background:white;
-border-radius:8px;
-overflow:hidden;
-box-shadow:0 2px 6px rgba(0,0,0,0.15);
-}
-
-.project-image{
-flex:1 1 40%;
-}
-
-.project-image img{
-width:100%;
-height:auto;
-}
-
-.project-description{
-flex:1 1 60%;
-padding:20px;
-}
-
-.project-description h3{
-margin-top:0;
-}
-
-/* SKILLS */
-
-.skills-icons{
-display:flex;
-flex-wrap:wrap;
+.project-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
 }
 
-.skill{
+.project-card{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+}
+
+.skills{
 display:flex;
-align-items:center;
-background:#f0f0f0;
-padding:10px 15px;
-border-radius:6px;
-transition:transform .3s;
+flex-wrap:wrap;
+gap:15px;
+justify-content:center;
 }
 
-.skill:hover{
-transform:scale(1.05);
+.skills span{
+background:#1e293b;
+padding:10px 20px;
+border-radius:20px;
 }
-
-/* CONTACT FORM */
-
-.contact-form{
-display:flex;
-flex-direction:column;
-gap:12px;
-margin-top:20px;
-}
-
-.contact-form input,
-.contact-form textarea{
-padding:10px;
-border-radius:5px;
-border:1px solid #ccc;
-font-size:15px;
-}
-
-.contact-form button{
-padding:10px;
-background:#333;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-transition:background .3s;
-}
-
-.contact-form button:hover{
-background:#555;
-}
-
-/* FOOTER */
 
 footer{
-background:#787777;
-color:white;
 text-align:center;
 padding:20px;
-margin-top:20px;
-}
-
-.footer-content{
-max-width:1200px;
-margin:auto;
-}
-
-.social-links{
-margin-top:10px;
-}
-
-.social-links a{
-margin:0 10px;
-}
-
-.social-links img{
-width:24px;
-height:24px;
-transition:transform .2s;
-}
-
-.social-links img:hover{
-transform:scale(1.2);
-}
-
-/* LOADER */
-
-.loader{
-border:8px solid #f3f3f3;
-border-top:8px solid #3498db;
-border-radius:50%;
-width:60px;
-height:60px;
-animation:spin 1s linear infinite;
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-display:none;
-}
-
-.loader.visible{
-display:block;
-}
-
-@keyframes spin{
-0%{transform:translate(-50%,-50%) rotate(0deg);}
-100%{transform:translate(-50%,-50%) rotate(360deg);}
-}
-
-/* RESPONSIVE */
-
-@media(max-width:768px){
-
-nav ul{
-flex-direction:column;
-gap:10px;
-}
-
-.row{
-flex-direction:column;
-}
-
-.project{
-flex-direction:column;
-}
-
+background:#020617;
 }
