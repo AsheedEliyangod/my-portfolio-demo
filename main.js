@@ -1,4 +1,5 @@
-alert("JS WORKING")
+console.log("JS RUNNING")
+
 const canvas = document.getElementById("canvas")
 
 /* SCENE */
@@ -11,7 +12,7 @@ window.innerWidth/window.innerHeight,
 0.1,
 1000
 )
-camera.position.set(3,3,5)
+camera.position.set(4,3,6)
 
 /* RENDERER */
 const renderer = new THREE.WebGLRenderer({
@@ -24,19 +25,18 @@ renderer.setSize(window.innerWidth,window.innerHeight)
 const light = new THREE.HemisphereLight(0xffffff,0x444444,1)
 scene.add(light)
 
-/* DEBUG GRID */
+/* DEBUG GRID (TO SEE SOMETHING ALWAYS) */
 const grid = new THREE.GridHelper(10,10)
 scene.add(grid)
 
 /* LOADER */
 const loader = new THREE.GLTFLoader()
 
-/* LOAD MODEL */
+/* LOAD ISLAND */
 loader.load(
 "pirate_island.glb",
 
 function(gltf){
-
     const model = gltf.scene
 
     /* CENTER MODEL */
@@ -48,20 +48,20 @@ function(gltf){
 
     scene.add(model)
 
-    console.log("MODEL LOADED ✅")
-
+    console.log("ISLAND LOADED ✅")
 },
 
 undefined,
 
 function(error){
-    console.error("ERROR ❌", error)
+    console.error("ERROR LOADING MODEL ❌", error)
 }
 )
 
-/* LOOP */
+/* ANIMATION LOOP */
 function animate(){
     requestAnimationFrame(animate)
+
     renderer.render(scene,camera)
 }
 animate()
