@@ -1,193 +1,180 @@
-const canvas = document.getElementById("gameCanvas")
-const ctx = canvas.getContext("2d")
+const scene = new THREE.Scene()
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+/* CAMERA */
+const camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+)
 
+camera.position.set(6,4,6)
 
-/* stars */
-
-let stars=[]
-
-for(let i=0;i<100;i++){
-
-stars.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-size:Math.random()*2
-
+/* RENDERER */
+const renderer = new THREE.WebGLRenderer({
+canvas:document.getElementById("canvas"),
+antialias:true
 })
+
+renderer.setSize(window.innerWidth,window.innerHeight)
+
+/* LIGHTING */
+const ambient = new THREE.AmbientLight(0xffffff,0.6)
+scene.add(ambient)
+
+const sun = new THREE.DirectionalLight(0xffffff,1)
+sun.position.set(5,10,5)
+scene.add(sun)
+
+/* SKY */
+scene.background = new THREE.Color(0x87ceeb)
+
+/* WATER */
+const water = new THREE.Mesh(
+new THREE.CircleGeometry(20,64),
+new THREE.MeshStandardMaterial({
+color:0x1e3a8a,
+transparent:true,
+opacity:0.8
+})
+)
+water.rotation.x = -Math.PI/2
+scene.add(water)
+
+/* ISLAND */
+const island = new THREE.Mesh(
+new THREE.CylinderGeometry(3,3,1,32),
+new THREE.MeshStandardMaterial({color:0x3f6212})
+)
+island.position.y = -1
+scene.add(island)
+
+/* TREES */
+function createTree(x,z){
+
+const trunk = new THREE.Mesh(
+new THREE.CylinderGeometry(0.1,0.1,1),
+new THREE.MeshStandardMaterial({color:0x8b5a2b})
+)
+
+trunk.position.set(x,-0.2,z)
+
+const leaves = new THREE.Mesh(
+new THREE.SphereGeometry(0.5,16,16),
+new THREE.MeshStandardMaterial({color:0x16a34a})
+)
+
+leaves.position.set(x,0.6,z)
+
+scene.add(trunk)
+scene.add(leaves)
 
 }
 
+/* add multiple trees */
+createTree(-1.5,-1)
+createTree(1.5,1)
+createTree(-1.2,1.5)
+createTree(1,-1.5)
 
-/* clouds */
-
-let clouds=[]
+/* CLOUDS */
+const clouds=[]
 
 for(let i=0;i<5;i++){
 
-clouds.push({
+const cloud = new THREE.Mesh(
+new THREE.SphereGeometry(0.6,16,16),
+new THREE.MeshStandardMaterial({color:0xffffff})
+)
 
-x:Math.random()*canvas.width,
-y:Math.random()*200,
-speed:0.2
+cloud.position.set(
+Math.random()*10-5,
+3+Math.random(),
+Math.random()*10-5
+)
 
-})
-
-}
-
-
-/* mountains */
-
-let mountains=[]
-
-for(let i=0;i<3;i++){
-
-mountains.push({
-
-x:i*400,
-y:canvas.height-300,
-w:400,
-h:200
-
-})
+scene.add(cloud)
+clouds.push(cloud)
 
 }
 
+/* CLICKABLE OBJECTS */
+const objects=[]
 
-/* trees */
+function createObject(x,z,color,name){
 
-let trees=[]
+const mesh = new THREE.Mesh(
+new THREE.BoxGeometry(),
+new THREE.MeshStandardMaterial({color})
+)
 
-for(let i=0;i<6;i++){
+mesh.position.set(x,0.3,z)
+mesh.userData.name = name
 
-trees.push({
-
-x:i*250,
-y:canvas.height-180
-
-})
-
-}
-
-
-/* player */
-
-let player={
-
-x:200,
-y:canvas.height-160,
-frame:0
+scene.add(mesh)
+objects.push(mesh)
 
 }
 
+createObject(-2,0,0xff8800,"ABOUT")
+createObject(2,0,0x0088ff,"PROJECTS")
+createObject(0,-2,0x00ff88,"SKILLS")
+createObject(0,2,0xff0000,"CONTACT")
 
-/* animation */
+/* RAYCASTER */
+const raycaster = new THREE.Raycaster()
+const mouse = new THREE.Vector2()
 
-function draw(){
+window.addEventListener("click",(e)=>{
 
-ctx.clearRect(0,0,canvas.width,canvas.height)
+mouse.x = (e.clientX/window.innerWidth)*2 - 1
+mouse.y = -(e.clientY/window.innerHeight)*2 + 1
 
+raycaster.setFromCamera(mouse,camera)
 
-/* sky gradient */
+const hit = raycaster.intersectObjects(objects)
 
-let gradient = ctx.createLinearGradient(0,0,0,canvas.height)
+if(hit.length>0){
 
-gradient.addColorStop(0,"#020617")
-gradient.addColorStop(1,"#0f172a")
+document.getElementById("ui").style.display="block"
+document.getElementById("ui").innerHTML =
+"<h2>"+hit[0].object.userData.name+"</h2>"
 
-ctx.fillStyle = gradient
-ctx.fillRect(0,0,canvas.width,canvas.height)
-
-
-/* stars */
-
-ctx.fillStyle="white"
-
-stars.forEach(s=>{
-
-ctx.fillRect(s.x,s.y,s.size,s.size)
+}
 
 })
 
+/* ANIMATION */
+function animate(){
 
-/* clouds */
+requestAnimationFrame(animate)
 
-ctx.fillStyle="#1e293b"
+/* CAMERA ROTATION */
+camera.position.x = Math.sin(Date.now()*0.0005)*6
+camera.position.z = Math.cos(Date.now()*0.0005)*6
 
+camera.lookAt(0,0,0)
+
+/* FLOAT OBJECTS */
+objects.forEach((obj,i)=>{
+obj.position.y = 0.3 + Math.sin(Date.now()*0.002+i)*0.2
+})
+
+/* MOVE CLOUDS */
 clouds.forEach(c=>{
-
-ctx.beginPath()
-
-ctx.arc(c.x,c.y,40,0,Math.PI*2)
-
-ctx.fill()
-
-c.x-=c.speed
-
-if(c.x<-50) c.x=canvas.width
-
+c.position.x += 0.01
+if(c.position.x > 6) c.position.x = -6
 })
 
-
-/* mountains */
-
-ctx.fillStyle="#111827"
-
-mountains.forEach(m=>{
-
-ctx.beginPath()
-
-ctx.moveTo(m.x,m.y+m.h)
-ctx.lineTo(m.x+m.w/2,m.y)
-ctx.lineTo(m.x+m.w,m.y+m.h)
-
-ctx.fill()
-
-})
-
-
-/* ground */
-
-ctx.fillStyle="#020617"
-
-ctx.fillRect(0,canvas.height-100,canvas.width,100)
-
-
-/* trees */
-
-ctx.fillStyle="#1e293b"
-
-trees.forEach(t=>{
-
-ctx.fillRect(t.x,t.y,20,80)
-
-ctx.beginPath()
-ctx.arc(t.x+10,t.y,40,0,Math.PI*2)
-ctx.fill()
-
-t.x-=1
-
-if(t.x<-50) t.x=canvas.width
-
-})
-
-
-/* walking player */
-
-ctx.fillStyle="#38bdf8"
-
-let step = Math.sin(player.frame)*5
-
-ctx.fillRect(player.x,player.y+step,40,80)
-
-player.frame+=0.1
-
-
-requestAnimationFrame(draw)
+renderer.render(scene,camera)
 
 }
 
-draw()
+animate()
+
+/* RESIZE FIX */
+window.addEventListener("resize",()=>{
+camera.aspect = window.innerWidth/window.innerHeight
+camera.updateProjectionMatrix()
+renderer.setSize(window.innerWidth,window.innerHeight)
+})
