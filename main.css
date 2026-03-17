@@ -1,124 +1,21 @@
 body{
 margin:0;
-font-family:Arial;
-background:#020617;
-color:white;
-}
-
-
-/* HEADER */
-
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 10%;
-position:fixed;
-width:80%;
-z-index:10;
-}
-
-.logo{
-font-size:24px;
-font-weight:bold;
-}
-
-nav a{
-color:white;
-margin-left:20px;
-text-decoration:none;
-}
-
-
-/* HERO */
-
-.hero{
-height:100vh;
-position:relative;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
 overflow:hidden;
+background:black;
 }
 
+#canvas{
+display:block;
+}
 
-/* GAME CANVAS */
-
-#gameCanvas{
+#ui{
 position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:-1;
-}
-
-
-/* HERO TEXT */
-
-.hero h1{
-font-size:80px;
-margin:0;
-}
-
-.hero span{
-color:#38bdf8;
-}
-
-.hero p{
-margin-top:15px;
-color:#cbd5f5;
-}
-
-
-/* BUTTONS */
-
-.hero-buttons{
-margin-top:30px;
-}
-
-.btn{
-background:#38bdf8;
-padding:15px 35px;
-color:black;
-text-decoration:none;
-border-radius:8px;
-margin-right:20px;
-}
-
-.btn-outline{
-border:2px solid #38bdf8;
-padding:13px 35px;
-color:white;
-text-decoration:none;
-border-radius:8px;
-}
-
-
-/* SECTIONS */
-
-section{
-padding:120px 10%;
-text-align:center;
-}
-
-
-/* SKILLS */
-
-.skills span{
-display:inline-block;
-background:#0f172a;
-padding:10px 20px;
-margin:10px;
-border-radius:20px;
-}
-
-
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:40px;
+top:20%;
+left:50%;
+transform:translateX(-50%);
 background:#020617;
+color:white;
+padding:20px;
+border-radius:10px;
+display:none;
 }
