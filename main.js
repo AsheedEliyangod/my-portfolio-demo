@@ -1,5 +1,4 @@
 
-
 const canvas = document.getElementById("canvas")
 
 /* SCENE */
@@ -13,7 +12,8 @@ window.innerWidth / window.innerHeight,
 0.1,
 1000
 )
-camera.position.set(4, 3, 6)
+camera.position.set(0, 2, 5)
+camera.lookAt(0, 0, 0)
 
 /* RENDERER */
 const renderer = new THREE.WebGLRenderer({
@@ -27,33 +27,25 @@ renderer.setPixelRatio(window.devicePixelRatio)
 const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1)
 scene.add(light)
 
-/* ===== TEST OBJECT (VERY IMPORTANT) ===== */
-const cube = new THREE.Mesh(
-new THREE.BoxGeometry(),
-new THREE.MeshStandardMaterial({ color: 0x00ff00 })
-)
-scene.add(cube)
-
-/* ===== GRID ===== */
+/* GRID (optional for debugging) */
 const grid = new THREE.GridHelper(10, 10)
 scene.add(grid)
 
-/* ===== LOADER ===== */
+/* LOADER */
 const loader = new THREE.GLTFLoader()
 
-/* LOAD ISLAND MODEL */
+/* LOAD ISLAND */
 loader.load(
 "pirate_island.glb",
 
 function (gltf) {
+
     const model = gltf.scene
 
-    /* CENTER MODEL */
-    const box = new THREE.Box3().setFromObject(model)
-    const center = box.getCenter(new THREE.Vector3())
-    model.position.sub(center)
+    model.scale.set(1, 1, 1)
 
-    model.scale.set(0.5, 0.5, 0.5)
+    /* Move island slightly down so it's visible */
+    model.position.set(0, -1, 0)
 
     scene.add(model)
 
@@ -67,17 +59,15 @@ function (error) {
 }
 )
 
-/* ===== ANIMATION LOOP ===== */
+/* ANIMATION LOOP */
 function animate() {
     requestAnimationFrame(animate)
-
-    cube.rotation.y += 0.01
 
     renderer.render(scene, camera)
 }
 animate()
 
-/* ===== RESIZE ===== */
+/* RESIZE */
 window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
