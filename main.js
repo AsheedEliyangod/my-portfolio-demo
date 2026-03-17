@@ -22,12 +22,6 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(window.innerWidth, window.innerHeight)
 
-/* COLOR FIX */
-renderer.outputEncoding = THREE.sRGBEncoding
-renderer.toneMapping = THREE.ACESFilmicToneMapping
-renderer.toneMappingExposure = 1
-renderer.physicallyCorrectLights = true
-
 /* LIGHTING */
 const ambient = new THREE.AmbientLight(0xffffff, 1.2)
 scene.add(ambient)
@@ -40,54 +34,41 @@ scene.add(dirLight)
 const raycaster = new THREE.Raycaster()
 const mouse = new THREE.Vector2()
 
-/* MODEL VARIABLE */
+/* UI */
+const actionUI = document.getElementById("actionUI")
+const actionBtn = document.getElementById("actionBtn")
+let currentPage = ""
+
+/* MODEL */
 let island
 
-/* LOADER */
 const loader = new THREE.GLTFLoader()
 
-loader.load(
-"pirate_island.glb",
-
-function (gltf) {
+loader.load("pirate_island.glb", function (gltf) {
 
     island = gltf.scene
     scene.add(island)
 
-    /* 🔍 DEBUG OBJECT NAMES */
-    island.traverse((obj) => {
-        console.log("Object:", obj.name)
-    })
-
-    /* CENTER MODEL */
+    /* CENTER */
     const box = new THREE.Box3().setFromObject(island)
     const center = box.getCenter(new THREE.Vector3())
     const size = box.getSize(new THREE.Vector3())
 
     island.position.sub(center)
 
-    /* AUTO SCALE */
+    /* SCALE */
     const maxSize = Math.max(size.x, size.y, size.z)
-    const desiredSize = 13
-    const scale = desiredSize / maxSize
-
+    const scale = 20 / maxSize
     island.scale.set(scale, scale, scale)
 
     /* CAMERA */
     camera.position.set(2, 3, 6)
     camera.lookAt(0, 1, 0)
 
-    console.log("ISLAND LOADED ✅")
-},
+    console.log("LOADED")
+})
 
-undefined,
-
-function (error) {
-    console.error("MODEL ERROR ❌", error)
-}
-)
-
-/* CLICK EVENT */
+/* CLICK HANDLER */
 function handleClick(x, y) {
 
     mouse.x = (x / window.innerWidth) * 2 - 1
@@ -101,14 +82,68 @@ function handleClick(x, y) {
 
     if (intersects.length > 0) {
 
-        const clicked = intersects[0].object
-        const name = clicked.name.toLowerCase()
+        const name = intersects[0].object.name.toLowerCase()
 
-        console.log("Clicked:", name)
-
-        /* 🔥 CHANGE BASED ON MODEL PART */
         if (name.includes("house")) {
-            alert("About Me Page")
+            currentPage = "about.html"
+            actionBtn.innerText = "About Me"
+        }
+        else if (name.includes("ship") || name.includes("boat")) {
+            currentPage = "projects.html"
+            actionBtn.innerText = "Projects"
+        }
+        else if (name.includes("tree")) {
+            currentPage = "skills.html"
+            actionBtn.innerText = "Skills"
+        }
+        else {
+            currentPage = "contact.html"
+            actionBtn.innerText = "Contact"
+        }
+
+        actionUI.style.display = "block"
+    }
+}
+
+/* EVENTS */
+window.addEventListener("click", (e) => {
+    handleClick(e.clientX, e.clientY)
+})
+
+window.addEventListener("touchstart", (e) => {
+    const t = e.touches[0]
+    handleClick(t.clientX, t.clientY)
+})
+
+actionBtn.addEventListener("click", () => {
+    if (currentPage) {
+        window.location.href = currentPage
+    }
+})
+
+/* ANIMATION */
+let time = 0
+
+function animate() {
+    requestAnimationFrame(animate)
+
+    if (island) {
+        island.rotation.y += 0.003
+        time += 0.01
+        island.position.y = Math.sin(time) * 0.2
+    }
+
+    renderer.render(scene, camera)
+}
+
+animate()
+
+/* RESIZE */
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(window.innerWidth, window.innerHeight)
+})            alert("About Me Page")
             // window.location.href = "about.html"
         }
         else if (name.includes("ship") || name.includes("boat")) {
