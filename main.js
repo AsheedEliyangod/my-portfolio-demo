@@ -4,7 +4,7 @@ const canvas = document.getElementById("canvas")
 
 /* SCENE */
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x87ceeb) // sky blue
+scene.background = new THREE.Color(0x020617) // dark bg
 
 /* CAMERA */
 const camera = new THREE.PerspectiveCamera(
@@ -13,6 +13,7 @@ window.innerWidth / window.innerHeight,
 0.1,
 1000
 )
+camera.position.set(0, 2, 6) // ✅ set early
 
 /* RENDERER */
 const renderer = new THREE.WebGLRenderer({
@@ -22,14 +23,14 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(window.innerWidth, window.innerHeight)
 
-/* 🔥 COLOR + LIGHT FIX */
+/* COLOR FIX */
 renderer.outputEncoding = THREE.sRGBEncoding
 renderer.toneMapping = THREE.ACESFilmicToneMapping
 renderer.toneMappingExposure = 1
 renderer.physicallyCorrectLights = true
 
-/* ===== LIGHTING ===== */
-const ambient = new THREE.AmbientLight(0xffffff, 1)
+/* LIGHTING */
+const ambient = new THREE.AmbientLight(0xffffff, 1.2)
 scene.add(ambient)
 
 const dirLight = new THREE.DirectionalLight(0xffffff, 2)
@@ -51,24 +52,16 @@ function (gltf) {
     const model = gltf.scene
     scene.add(model)
 
-    /* AUTO CENTER */
+    /* ✅ CENTER MODEL (ONLY ONCE) */
     const box = new THREE.Box3().setFromObject(model)
     const center = box.getCenter(new THREE.Vector3())
-    const size = box.getSize(new THREE.Vector3())
-
     model.position.sub(center)
 
-    /* AUTO CENTER */
-const box = new THREE.Box3().setFromObject(model)
-const center = box.getCenter(new THREE.Vector3())
-model.position.sub(center)
+    /* ✅ SCALE FIX */
+    model.scale.set(5, 5, 5)
 
-/* 🔥 FIX SCALE (MAKE BIGGER) */
-model.scale.set(5, 5, 5)
-
-/* 🔥 FIX CAMERA (CLOSE VIEW) */
-camera.position.set(3, 2, 4)
-camera.lookAt(0, 0, 0)
+    /* ✅ LOOK AT CENTER */
+    camera.lookAt(0, 0, 0)
 
     console.log("ISLAND LOADED ✅")
 },
@@ -80,10 +73,9 @@ function (error) {
 }
 )
 
-/* ANIMATION LOOP */
+/* LOOP */
 function animate() {
     requestAnimationFrame(animate)
-
     renderer.render(scene, camera)
 }
 animate()
