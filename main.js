@@ -8,10 +8,10 @@ scene.background = new THREE.Color(0x020617)
 
 /* CAMERA */
 const camera = new THREE.PerspectiveCamera(
-75,
-window.innerWidth / window.innerHeight,
-0.1,
-1000
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
 )
 
 /* RENDERER */
@@ -42,12 +42,24 @@ let currentPage = ""
 /* MODEL */
 let island
 
+/* CAMERA ANIMATION */
+let targetPosition = null
+let isZooming = false
+
+/* LOADER */
 const loader = new THREE.GLTFLoader()
 
-loader.load("pirate_island.glb", function (gltf) {
+loader.load(
+  "pirate_island.glb",
 
+  function (gltf) {
     island = gltf.scene
     scene.add(island)
+
+    /* DEBUG NAMES */
+    island.traverse((obj) => {
+      console.log("Object:", obj.name)
+    })
 
     /* CENTER */
     const box = new THREE.Box3().setFromObject(island)
@@ -61,54 +73,116 @@ loader.load("pirate_island.glb", function (gltf) {
     const scale = 20 / maxSize
     island.scale.set(scale, scale, scale)
 
-    /* CAMERA */
+    /* CAMERA START */
     camera.position.set(2, 3, 6)
     camera.lookAt(0, 1, 0)
 
-    console.log("LOADED")
-})
+    console.log("ISLAND LOADED ✅")
+  },
+
+  undefined,
+
+  function (error) {
+    console.error("MODEL ERROR ❌", error)
+  }
+)
 
 /* CLICK HANDLER */
 function handleClick(x, y) {
+  mouse.x = (x / window.innerWidth) * 2 - 1
+  mouse.y = -(y / window.innerHeight) * 2 + 1
 
-    mouse.x = (x / window.innerWidth) * 2 - 1
-    mouse.y = -(y / window.innerHeight) * 2 + 1
+  raycaster.setFromCamera(mouse, camera)
 
-    raycaster.setFromCamera(mouse, camera)
+  if (!island) return
 
-    if (!island) return
+  const intersects = raycaster.intersectObject(island, true)
 
-    const intersects = raycaster.intersectObject(island, true)
+  if (intersects.length > 0) {
+    const obj = intersects[0].object
+    const name = obj.name.toLowerCase()
 
-    if (intersects.length > 0) {
+    console.log("Clicked:", name)
 
-        const name = intersects[0].object.name.toLowerCase()
+    /* 🎯 GET WORLD POSITION */
+    const worldPos = new THREE.Vector3()
+    obj.getWorldPosition(worldPos)
 
-        if (name.includes("house")) {
-            currentPage = "about.html"
-            actionBtn.innerText = "About Me"
-        }
-        else if (name.includes("ship") || name.includes("boat")) {
-            currentPage = "projects.html"
-            actionBtn.innerText = "Projects"
-        }
-        else if (name.includes("tree")) {
-            currentPage = "skills.html"
-            actionBtn.innerText = "Skills"
-        }
-        else {
-            currentPage = "contact.html"
-            actionBtn.innerText = "Contact"
-        }
+    /* 🎥 CAMERA TARGET */
+    targetPosition = worldPos.clone().add(new THREE.Vector3(2, 2, 4))
+    isZooming = true
 
-        actionUI.style.display = "block"
+    /* BUTTON TEXT */
+    if (name.includes("house")) {
+      currentPage = "about.html"
+      actionBtn.innerText = "About Me"
+    } else if (name.includes("ship") || name.includes("boat")) {
+      currentPage = "projects.html"
+      actionBtn.innerText = "Projects"
+    } else if (name.includes("tree")) {
+      currentPage = "skills.html"
+      actionBtn.innerText = "Skills"
+    } else {
+      currentPage = "contact.html"
+      actionBtn.innerText = "Contact"
     }
+
+    actionUI.style.display = "none"
+  }
 }
 
 /* EVENTS */
 window.addEventListener("click", (e) => {
-    handleClick(e.clientX, e.clientY)
+  handleClick(e.clientX, e.clientY)
 })
+
+window.addEventListener("touchstart", (e) => {
+  const t = e.touches[0]
+  handleClick(t.clientX, t.clientY)
+})
+
+/* BUTTON NAVIGATION */
+actionBtn.addEventListener("click", () => {
+  if (currentPage) {
+    window.location.href = currentPage
+  }
+})
+
+/* ANIMATION */
+let time = 0
+
+function animate() {
+  requestAnimationFrame(animate)
+
+  if (island) {
+    island.rotation.y += 0.003
+    time += 0.01
+    island.position.y = Math.sin(time) * 0.2
+  }
+
+  /* 🎥 CAMERA ZOOM */
+  if (isZooming && targetPosition) {
+    camera.position.lerp(targetPosition, 0.05)
+
+    camera.lookAt(0, 1, 0)
+
+    if (camera.position.distanceTo(targetPosition) < 0.1) {
+      isZooming = false
+      actionUI.style.display = "block"
+    }
+  }
+
+  renderer.render(scene, camera)
+}
+
+animate()
+
+/* RESIZE */
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+  renderer.setSize(window.innerWidth, window.innerHeight)
+})})
 
 window.addEventListener("touchstart", (e) => {
     const t = e.touches[0]
