@@ -1,3 +1,6 @@
+const canvas = document.getElementById("canvas")
+
+/* SCENE */
 const scene = new THREE.Scene()
 
 /* CAMERA */
@@ -7,108 +10,132 @@ window.innerWidth/window.innerHeight,
 0.1,
 1000
 )
-
 camera.position.set(6,4,6)
 
 /* RENDERER */
 const renderer = new THREE.WebGLRenderer({
-canvas:document.getElementById("canvas"),
-antialias:true
+canvas: canvas,
+antialias: true
 })
-
 renderer.setSize(window.innerWidth,window.innerHeight)
 
-/* LIGHTING */
-const ambient = new THREE.AmbientLight(0xffffff,0.6)
-scene.add(ambient)
+/* LIGHT */
+scene.add(new THREE.AmbientLight(0xffffff,0.6))
 
-const sun = new THREE.DirectionalLight(0xffffff,1)
-sun.position.set(5,10,5)
-scene.add(sun)
+const light = new THREE.DirectionalLight(0xffffff,1)
+light.position.set(5,10,5)
+scene.add(light)
 
 /* SKY */
 scene.background = new THREE.Color(0x87ceeb)
 
-/* WATER */
-const water = new THREE.Mesh(
-new THREE.CircleGeometry(20,64),
-new THREE.MeshStandardMaterial({
-color:0x1e3a8a,
-transparent:true,
-opacity:0.8
-})
-)
-water.rotation.x = -Math.PI/2
-scene.add(water)
+/* LOADER */
+const loader = new THREE.GLTFLoader()
 
-/* ISLAND */
-const island = new THREE.Mesh(
-new THREE.CylinderGeometry(3,3,1,32),
-new THREE.MeshStandardMaterial({color:0x3f6212})
-)
-island.position.y = -1
+let island
+let character
+let mixer
+
+/* LOAD ISLAND */
+loader.load("pirate_island.glb",(gltf)=>{
+island = gltf.scene
+island.scale.set(1.5,1.5,1.5)
 scene.add(island)
+})
 
-/* TREES */
-function createTree(x,z){
+/* LOAD CHARACTER */
+loader.load("character.glb",(gltf)=>{
+character = gltf.scene
+character.scale.set(0.8,0.8,0.8)
+character.position.set(0,0,2)
+scene.add(character)
 
-const trunk = new THREE.Mesh(
-new THREE.CylinderGeometry(0.1,0.1,1),
-new THREE.MeshStandardMaterial({color:0x8b5a2b})
+/* animation */
+mixer = new THREE.AnimationMixer(character)
+if(gltf.animations.length > 0){
+const action = mixer.clipAction(gltf.animations[0])
+action.play()
+}
+})
+
+/* CAMERA TARGET */
+let targetPos = new THREE.Vector3(6,4,6)
+
+/* RAYCAST */
+const raycaster = new THREE.Raycaster()
+const mouse = new THREE.Vector2()
+
+window.addEventListener("click",(e)=>{
+
+mouse.x = (e.clientX/window.innerWidth)*2 - 1
+mouse.y = -(e.clientY/window.innerHeight)*2 + 1
+
+raycaster.setFromCamera(mouse,camera)
+
+if(!island) return
+
+const intersects = raycaster.intersectObject(island,true)
+
+if(intersects.length > 0){
+
+const point = intersects[0].point
+
+/* CAMERA MOVE */
+targetPos.set(
+point.x + 2,
+point.y + 2,
+point.z + 2
 )
 
-trunk.position.set(x,-0.2,z)
+/* UI */
+const ui = document.getElementById("ui")
+ui.style.display = "block"
 
-const leaves = new THREE.Mesh(
-new THREE.SphereGeometry(0.5,16,16),
-new THREE.MeshStandardMaterial({color:0x16a34a})
-)
-
-leaves.position.set(x,0.6,z)
-
-scene.add(trunk)
-scene.add(leaves)
+/* AREA LOGIC */
+if(point.x < 0){
+ui.innerHTML = "<h2>About Me</h2><p>Aspiring Game Developer working with Unreal Engine.</p>"
+}
+else if(point.x > 1){
+ui.innerHTML = "<h2>Projects</h2><p>Unreal landscapes and gameplay systems.</p>"
+}
+else if(point.z < 0){
+ui.innerHTML = "<h2>Skills</h2><p>Unreal Engine, C, C#, JavaScript</p>"
+}
+else{
+ui.innerHTML = "<h2>Contact</h2><p>asheedeliyangod@gmail.com</p>"
+}
 
 }
 
-/* add multiple trees */
-createTree(-1.5,-1)
-createTree(1.5,1)
-createTree(-1.2,1.5)
-createTree(1,-1.5)
+})
 
-/* CLOUDS */
-const clouds=[]
+/* ANIMATION LOOP */
+const clock = new THREE.Clock()
 
-for(let i=0;i<5;i++){
+function animate(){
 
-const cloud = new THREE.Mesh(
-new THREE.SphereGeometry(0.6,16,16),
-new THREE.MeshStandardMaterial({color:0xffffff})
-)
+requestAnimationFrame(animate)
 
-cloud.position.set(
-Math.random()*10-5,
-3+Math.random(),
-Math.random()*10-5
-)
+const delta = clock.getDelta()
 
-scene.add(cloud)
-clouds.push(cloud)
+if(mixer) mixer.update(delta)
 
+/* SMOOTH CAMERA */
+camera.position.lerp(targetPos,0.05)
+
+camera.lookAt(0,0,0)
+
+renderer.render(scene,camera)
 }
 
-/* CLICKABLE OBJECTS */
-const objects=[]
+animate()
 
-function createObject(x,z,color,name){
-
-const mesh = new THREE.Mesh(
-new THREE.BoxGeometry(),
-new THREE.MeshStandardMaterial({color})
-)
-
-mesh.position.set(x,0.3,z)
+/* RESIZE */
+window.addEventListener("resize",()=>{
+camera.aspect = window.innerWidth/window.innerHeight
+camera.updateProjectionMatrix()
+renderer.setSize(window.innerWidth,window.innerHeight)
+})mesh.position.set(x,0.3,z)
 mesh.userData.name = name
 
 scene.add(mesh)
