@@ -1,3 +1,4 @@
+alert("JS WORKING")
 const canvas = document.getElementById("canvas")
 
 /* SCENE */
