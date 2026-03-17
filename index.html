@@ -1,53 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>3D Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Portfolio</title>
 
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background: #020617;
-      font-family: Arial;
-      color: white;
-    }
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #020617;
+  color: white;
+  font-family: Arial;
+}
 
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 15px;
-      background: #020617;
-      z-index: 10;
-      font-weight: bold;
-    }
+header {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  font-weight: bold;
+}
+</style>
 
-    canvas {
-      display: block;
-    }
-
-    /* BUTTON UI */
-    .action-ui {
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-      z-index: 100;
-    }
-
-    button {
-      padding: 14px 30px;
-      border: none;
-      border-radius: 8px;
-      background: #38bdf8;
-      font-weight: bold;
-      font-size: 16px;
-    }
-  </style>
 </head>
 
 <body>
@@ -56,18 +30,15 @@
 
 <canvas id="canvas"></canvas>
 
-<div class="action-ui" id="actionUI">
-  <button id="actionBtn">Open</button>
-</div>
+<!-- ✅ NON MODULE SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
 
-<!-- 🔥 FULL WORKING SCRIPT -->
-<script type="module">
+<script>
+console.log("JS RUNNING")
 
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js";
-import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/loaders/GLTFLoader.js";
-
-/* BASIC SETUP */
 const canvas = document.getElementById("canvas")
+
 const scene = new THREE.Scene()
 scene.background = new THREE.Color(0x020617)
 
@@ -77,142 +48,60 @@ const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
 renderer.setSize(window.innerWidth, window.innerHeight)
 
 /* LIGHT */
-scene.add(new THREE.AmbientLight(0xffffff, 1.2))
+const ambient = new THREE.AmbientLight(0xffffff, 1.2)
+scene.add(ambient)
 
 const light = new THREE.DirectionalLight(0xffffff, 2)
 light.position.set(5,10,7)
 scene.add(light)
 
-/* RAYCAST */
-const raycaster = new THREE.Raycaster()
-const mouse = new THREE.Vector2()
-
-/* UI */
-const actionUI = document.getElementById("actionUI")
-const actionBtn = document.getElementById("actionBtn")
-let currentPage = ""
-
-/* CAMERA ANIMATION */
-let targetPos = null
-let isZooming = false
-
 /* MODEL */
 let island
 
-/* LOADER */
-const loader = new GLTFLoader()
+const loader = new THREE.GLTFLoader()
 
 loader.load(
-  "pirate_island.glb",
-  (gltf) => {
+"pirate_island.glb",
+
+function(gltf) {
 
     island = gltf.scene
     scene.add(island)
 
-    /* CENTER + SCALE */
     const box = new THREE.Box3().setFromObject(island)
     const center = box.getCenter(new THREE.Vector3())
     const size = box.getSize(new THREE.Vector3())
 
     island.position.sub(center)
 
-    const scale = 20 / Math.max(size.x, size.y, size.z)
+    const scale = 15 / Math.max(size.x, size.y, size.z)
     island.scale.set(scale, scale, scale)
 
     camera.position.set(2, 3, 6)
     camera.lookAt(0, 1, 0)
 
-    console.log("ISLAND LOADED ✅")
-  }
+    console.log("LOADED ✅")
+},
+
+undefined,
+
+function(error){
+    console.log("ERROR ❌", error)
+}
 )
 
-/* CLICK */
-function handleClick(x, y) {
-
-  mouse.x = (x / window.innerWidth) * 2 - 1
-  mouse.y = -(y / window.innerHeight) * 2 + 1
-
-  raycaster.setFromCamera(mouse, camera)
-
-  if (!island) return
-
-  const hits = raycaster.intersectObject(island, true)
-
-  if (hits.length > 0) {
-
-    const obj = hits[0].object
-    const name = obj.name.toLowerCase()
-
-    /* CAMERA TARGET */
-    const pos = new THREE.Vector3()
-    obj.getWorldPosition(pos)
-
-    targetPos = pos.clone().add(new THREE.Vector3(2,2,4))
-    isZooming = true
-
-    /* BUTTON */
-    if (name.includes("house")) {
-      currentPage = "about.html"
-      actionBtn.innerText = "About Me"
-    }
-    else if (name.includes("ship")) {
-      currentPage = "projects.html"
-      actionBtn.innerText = "Projects"
-    }
-    else {
-      currentPage = "contact.html"
-      actionBtn.innerText = "Contact"
-    }
-
-    actionUI.style.display = "none"
-  }
-}
-
-/* EVENTS */
-window.addEventListener("click", e => handleClick(e.clientX, e.clientY))
-window.addEventListener("touchstart", e => {
-  const t = e.touches[0]
-  handleClick(t.clientX, t.clientY)
-})
-
-actionBtn.onclick = () => {
-  if (currentPage) window.location.href = currentPage
-}
-
-/* ANIMATION */
-let time = 0
-
+/* ANIMATE */
 function animate() {
-  requestAnimationFrame(animate)
+    requestAnimationFrame(animate)
 
-  if (island) {
-    island.rotation.y += 0.003
-    time += 0.01
-    island.position.y = Math.sin(time) * 0.2
-  }
-
-  /* CAMERA ZOOM */
-  if (isZooming && targetPos) {
-    camera.position.lerp(targetPos, 0.05)
-    camera.lookAt(0,1,0)
-
-    if (camera.position.distanceTo(targetPos) < 0.1) {
-      isZooming = false
-      actionUI.style.display = "block"
+    if (island) {
+        island.rotation.y += 0.003
     }
-  }
 
-  renderer.render(scene, camera)
+    renderer.render(scene, camera)
 }
 
 animate()
-
-/* RESIZE */
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight
-  camera.updateProjectionMatrix()
-  renderer.setSize(window.innerWidth, window.innerHeight)
-})
 
 </script>
 
