@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>3D Game Portfolio</title>
+<title>Game Portfolio</title>
 
 <link rel="stylesheet" href="main.css">
 
-<!-- THREE JS CDN -->
+<!-- THREE JS -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+<!-- GLTF LOADER -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
 
 </head>
 
 <body>
 
+<header>
+<h1>ASHEED</h1>
+</header>
+
+<!-- IMPORTANT CANVAS -->
 <canvas id="canvas"></canvas>
 
-<div id="ui"></div>
+<!-- UI PANEL -->
+<div id="ui" style="
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#020617;
+padding:20px;
+display:none;
+z-index:10;
+color:white;">
+</div>
 
+<!-- YOUR SCRIPT -->
 <script src="main.js"></script>
 
 </body>
