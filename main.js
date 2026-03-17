@@ -1,43 +1,45 @@
-console.log("START")
+console.log("JS START")
 
 const canvas = document.getElementById("canvas")
 
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x020617)
+scene.background = new THREE.Color(0x000000)
 
 const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth/window.innerHeight,
-  0.1,
-  1000
+75,
+window.innerWidth / window.innerHeight,
+0.1,
+1000
 )
 
-const renderer = new THREE.WebGLRenderer({ canvas })
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas
+})
+
 renderer.setSize(window.innerWidth, window.innerHeight)
 
-/* LIGHT */
-scene.add(new THREE.AmbientLight(0xffffff, 1))
-const light = new THREE.DirectionalLight(0xffffff, 2)
-light.position.set(5,10,7)
-scene.add(light)
+/* CUBE */
+const geometry = new THREE.BoxGeometry()
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+const cube = new THREE.Mesh(geometry, material)
 
-/* LOADER */
-const loader = new THREE.GLTFLoader()
+scene.add(cube)
 
-loader.load(
-  "pirate_island.glb",
-  function(gltf){
+camera.position.z = 5
 
-    const island = gltf.scene
-    scene.add(island)
+function animate() {
+  requestAnimationFrame(animate)
 
-    island.scale.set(2,2,2)
+  cube.rotation.y += 0.01
 
-    camera.position.set(3,3,6)
-    camera.lookAt(0,0,0)
+  renderer.render(scene, camera)
+}
 
-    console.log("MODEL OK")
+animate()
 
-  },
-  undefined,
-  function(e){
+/* RESIZE */
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+  renderer.setSize(window.innerWidth, window.innerHeight)
+})
