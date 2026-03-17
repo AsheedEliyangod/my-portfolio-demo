@@ -2,113 +2,19 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3D Portfolio</title>
-
-<style>
-body {
-  margin: 0;
-  overflow: hidden;
-  background: #020617;
-  font-family: Arial;
-  color: white;
-}
-
-header {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 10;
-  font-weight: bold;
-}
-</style>
+<title>Test</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>ASHEED</header>
-
 <canvas id="canvas"></canvas>
 
-<!-- ✅ CORRECT SCRIPT ORDER -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="main.js"></script>
 
-<script>
-
-console.log("JS RUNNING")
-
-/* BASIC */
-const canvas = document.getElementById("canvas")
-
-const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x020617)
-
-const camera = new THREE.PerspectiveCamera(
-75,
-window.innerWidth / window.innerHeight,
-0.1,
-1000
-)
-
-const renderer = new THREE.WebGLRenderer({
-  canvas: canvas,
-  antialias: true
-})
-
-renderer.setSize(window.innerWidth, window.innerHeight)
-
-/* LIGHT */
-const ambient = new THREE.AmbientLight(0xffffff, 1.2)
-scene.add(ambient)
-
-const light = new THREE.DirectionalLight(0xffffff, 2)
-light.position.set(5,10,7)
-scene.add(light)
-
-/* MODEL */
-let island
-
-/* LOADER */
-const loader = new THREE.GLTFLoader()
-
-loader.load(
-"./pirate_island.glb",   // ✅ SAFE PATH
-
-function (gltf) {
-
-    island = gltf.scene
-    scene.add(island)
-
-    /* CENTER */
-    const box = new THREE.Box3().setFromObject(island)
-    const center = box.getCenter(new THREE.Vector3())
-    const size = box.getSize(new THREE.Vector3())
-
-    island.position.sub(center)
-
-    /* SCALE */
-    const scale = 15 / Math.max(size.x, size.y, size.z)
-    island.scale.set(scale, scale, scale)
-
-    /* CAMERA */
-    camera.position.set(2, 3, 6)
-    camera.lookAt(0, 0, 0)
-
-    console.log("ISLAND LOADED ✅")
-},
-
-undefined,
-
-function (error) {
-    console.error("MODEL ERROR ❌", error)
-}
-)
-
-/* ANIMATION */
-function animate() {
-    requestAnimationFrame(animate)
-
-    if (island) {
+</body>
+</html>    if (island) {
         island.rotation.y += 0.003
     }
 
