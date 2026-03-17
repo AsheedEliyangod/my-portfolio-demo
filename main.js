@@ -68,7 +68,7 @@ function (gltf) {
 
     /* AUTO SCALE */
     const maxSize = Math.max(size.x, size.y, size.z)
-    const desiredSize = 20
+    const desiredSize = 13
     const scale = desiredSize / maxSize
 
     island.scale.set(scale, scale, scale)
