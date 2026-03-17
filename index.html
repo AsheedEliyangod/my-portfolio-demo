@@ -3,36 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Asheed 3D Portfolio</title>
-
+<title>3D Portfolio</title>
 <link rel="stylesheet" href="main.css">
-
-<!-- THREE JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-<!-- GLTF LOADER -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-
 </head>
 
 <body>
 
 <header>
-  <h1>ASHEED</h1>
+  <h2>ASHEED</h2>
 </header>
 
 <!-- CANVAS -->
 <canvas id="canvas"></canvas>
 
-<!-- UI TEXT -->
-<div class="ui">
-  <h2>GAME DEVELOPER</h2>
-  <p>Click objects to explore</p>
+<!-- ACTION BUTTON UI -->
+<div id="actionUI" class="action-ui">
+  <button id="actionBtn">Open</button>
 </div>
 
-<!-- SCRIPT -->
-<script src="./main.js"></script>
+<!-- THREE JS -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
+
+<script src="main.js"></script>
 
 </body>
 </html>
