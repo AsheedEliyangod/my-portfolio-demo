@@ -1,9 +1,10 @@
+console.log("JS RUNNING")
 
 const canvas = document.getElementById("canvas")
 
 /* SCENE */
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x111827)
+scene.background = new THREE.Color(0x87ceeb) // sky blue
 
 /* CAMERA */
 const camera = new THREE.PerspectiveCamera(
@@ -12,42 +13,61 @@ window.innerWidth / window.innerHeight,
 0.1,
 1000
 )
-camera.position.set(0, 2, 5)
-camera.lookAt(0, 0, 0)
 
 /* RENDERER */
 const renderer = new THREE.WebGLRenderer({
-canvas: canvas,
-antialias: true
+  canvas: canvas,
+  antialias: true
 })
+
 renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.setPixelRatio(window.devicePixelRatio)
 
-/* LIGHT */
-const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1)
-scene.add(light)
+/* 🔥 COLOR + LIGHT FIX */
+renderer.outputEncoding = THREE.sRGBEncoding
+renderer.toneMapping = THREE.ACESFilmicToneMapping
+renderer.toneMappingExposure = 1
+renderer.physicallyCorrectLights = true
 
-/* GRID (optional for debugging) */
+/* ===== LIGHTING ===== */
+const ambient = new THREE.AmbientLight(0xffffff, 1)
+scene.add(ambient)
+
+const dirLight = new THREE.DirectionalLight(0xffffff, 2)
+dirLight.position.set(5, 10, 7)
+scene.add(dirLight)
+
+/* GRID (optional) */
 const grid = new THREE.GridHelper(10, 10)
 scene.add(grid)
 
 /* LOADER */
 const loader = new THREE.GLTFLoader()
 
-/* LOAD ISLAND */
 loader.load(
 "pirate_island.glb",
 
 function (gltf) {
 
     const model = gltf.scene
-
-    model.scale.set(1, 1, 1)
-
-    /* Move island slightly down so it's visible */
-    model.position.set(0, -1, 0)
-
     scene.add(model)
+
+    /* AUTO CENTER */
+    const box = new THREE.Box3().setFromObject(model)
+    const center = box.getCenter(new THREE.Vector3())
+    const size = box.getSize(new THREE.Vector3())
+
+    model.position.sub(center)
+
+    /* AUTO SCALE */
+    const maxDim = Math.max(size.x, size.y, size.z)
+    const scale = 3 / maxDim
+    model.scale.set(scale, scale, scale)
+
+    /* CAMERA POSITION */
+    const distance = maxDim * 2
+
+    camera.position.set(distance, distance, distance)
+    camera.lookAt(0, 0, 0)
 
     console.log("ISLAND LOADED ✅")
 },
