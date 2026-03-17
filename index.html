@@ -9,8 +9,8 @@ body {
   margin: 0;
   overflow: hidden;
   background: #020617;
-  color: white;
   font-family: Arial;
+  color: white;
 }
 
 header {
@@ -21,7 +21,6 @@ header {
   font-weight: bold;
 }
 </style>
-
 </head>
 
 <body>
@@ -30,22 +29,32 @@ header {
 
 <canvas id="canvas"></canvas>
 
-<!-- ✅ NON MODULE SCRIPTS -->
+<!-- ✅ CORRECT SCRIPT ORDER -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <script>
- alert("JS LOADED")
+
 console.log("JS RUNNING")
 
+/* BASIC */
 const canvas = document.getElementById("canvas")
 
 const scene = new THREE.Scene()
 scene.background = new THREE.Color(0x020617)
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000)
+const camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth / window.innerHeight,
+0.1,
+1000
+)
 
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas,
+  antialias: true
+})
+
 renderer.setSize(window.innerWidth, window.innerHeight)
 
 /* LIGHT */
@@ -59,39 +68,43 @@ scene.add(light)
 /* MODEL */
 let island
 
+/* LOADER */
 const loader = new THREE.GLTFLoader()
 
 loader.load(
-"pirate_island.glb",
+"./pirate_island.glb",   // ✅ SAFE PATH
 
-function(gltf) {
+function (gltf) {
 
     island = gltf.scene
     scene.add(island)
 
+    /* CENTER */
     const box = new THREE.Box3().setFromObject(island)
     const center = box.getCenter(new THREE.Vector3())
     const size = box.getSize(new THREE.Vector3())
 
     island.position.sub(center)
 
+    /* SCALE */
     const scale = 15 / Math.max(size.x, size.y, size.z)
     island.scale.set(scale, scale, scale)
 
+    /* CAMERA */
     camera.position.set(2, 3, 6)
-    camera.lookAt(0, 1, 0)
+    camera.lookAt(0, 0, 0)
 
-    console.log("LOADED ✅")
+    console.log("ISLAND LOADED ✅")
 },
 
 undefined,
 
-function(error){
-    console.log("ERROR ❌", error)
+function (error) {
+    console.error("MODEL ERROR ❌", error)
 }
 )
 
-/* ANIMATE */
+/* ANIMATION */
 function animate() {
     requestAnimationFrame(animate)
 
@@ -103,6 +116,13 @@ function animate() {
 }
 
 animate()
+
+/* RESIZE */
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(window.innerWidth, window.innerHeight)
+})
 
 </script>
 
