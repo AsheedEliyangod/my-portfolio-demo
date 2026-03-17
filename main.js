@@ -4,7 +4,7 @@ const canvas = document.getElementById("canvas")
 
 /* SCENE */
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x020617) // dark bg
+scene.background = new THREE.Color(0x020617)
 
 /* CAMERA */
 const camera = new THREE.PerspectiveCamera(
@@ -13,7 +13,6 @@ window.innerWidth / window.innerHeight,
 0.1,
 1000
 )
-camera.position.set(0, 2, 6) // ✅ set early
 
 /* RENDERER */
 const renderer = new THREE.WebGLRenderer({
@@ -37,9 +36,8 @@ const dirLight = new THREE.DirectionalLight(0xffffff, 2)
 dirLight.position.set(5, 10, 7)
 scene.add(dirLight)
 
-/* GRID (optional) */
-const grid = new THREE.GridHelper(10, 10)
-scene.add(grid)
+/* MODEL VARIABLE */
+let island
 
 /* LOADER */
 const loader = new THREE.GLTFLoader()
@@ -49,18 +47,25 @@ loader.load(
 
 function (gltf) {
 
-    const model = gltf.scene
-    scene.add(model)
+    island = gltf.scene
+    scene.add(island)
 
-    /* ✅ CENTER MODEL (ONLY ONCE) */
-    const box = new THREE.Box3().setFromObject(model)
+    /* CENTER MODEL */
+    const box = new THREE.Box3().setFromObject(island)
     const center = box.getCenter(new THREE.Vector3())
-    model.position.sub(center)
+    const size = box.getSize(new THREE.Vector3())
 
-    /* ✅ SCALE FIX */
-    model.scale.set(0.5, 0.5, 0.5)
+    island.position.sub(center)
 
-    /* ✅ LOOK AT CENTER */
+    /* AUTO SCALE */
+    const maxSize = Math.max(size.x, size.y, size.z)
+    const desiredSize = 6   // 🔥 adjust if needed
+    const scale = desiredSize / maxSize
+
+    island.scale.set(scale, scale, scale)
+
+    /* CAMERA POSITION (PERFECT VIEW) */
+    camera.position.set(5, 6, 18)
     camera.lookAt(0, 0, 0)
 
     console.log("ISLAND LOADED ✅")
@@ -73,11 +78,22 @@ function (error) {
 }
 )
 
-/* LOOP */
+/* ANIMATION */
+let time = 0
+
 function animate() {
     requestAnimationFrame(animate)
+
+    if (island) {
+        island.rotation.y += 0.003   // 🔥 rotation
+
+        time += 0.01
+        island.position.y = Math.sin(time) * 0.2  // 🔥 floating
+    }
+
     renderer.render(scene, camera)
 }
+
 animate()
 
 /* RESIZE */
