@@ -3,7 +3,9 @@ console.log("JS START")
 const canvas = document.getElementById("canvas")
 
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x020617)
+
+/* 🔥 FORCE DARK BACKGROUND */
+scene.background = new THREE.Color(0x000000)
 
 const camera = new THREE.PerspectiveCamera(
 75,
@@ -16,11 +18,18 @@ const renderer = new THREE.WebGLRenderer({ canvas })
 renderer.setSize(window.innerWidth, window.innerHeight)
 
 /* LIGHT */
-scene.add(new THREE.AmbientLight(0xffffff, 1.2))
+scene.add(new THREE.AmbientLight(0xffffff, 1.5))
 
 const light = new THREE.DirectionalLight(0xffffff, 2)
 light.position.set(5,10,7)
 scene.add(light)
+
+/* TEST CUBE (IMPORTANT) */
+const cube = new THREE.Mesh(
+  new THREE.BoxGeometry(),
+  new THREE.MeshBasicMaterial({ color: 0xff0000 })
+)
+scene.add(cube)
 
 /* MODEL */
 let island
@@ -28,9 +37,11 @@ let island
 const loader = new THREE.GLTFLoader()
 
 loader.load(
-"./pirate_island.glb",
+"/my-portfolio-demo/pirate_island.glb",  // 🔥 FORCE FULL PATH
 
 function (gltf) {
+
+    console.log("LOADED ✅")
 
     island = gltf.scene
     scene.add(island)
@@ -41,25 +52,27 @@ function (gltf) {
 
     island.position.sub(center)
 
-    const scale = 15 / Math.max(size.x, size.y, size.z)
+    const scale = 10 / Math.max(size.x, size.y, size.z)
     island.scale.set(scale, scale, scale)
 
-    camera.position.set(2, 3, 6)
-    camera.lookAt(0, 0, 0)
-
-    console.log("ISLAND LOADED ✅")
 },
 
 undefined,
 
 function (error) {
-    console.error("MODEL ERROR ❌", error)
+    console.error("ERROR ❌", error)
 }
 )
+
+/* CAMERA */
+camera.position.set(0, 2, 6)
+camera.lookAt(0, 0, 0)
 
 /* ANIMATE */
 function animate() {
     requestAnimationFrame(animate)
+
+    cube.rotation.y += 0.01
 
     if (island) {
         island.rotation.y += 0.003
@@ -69,10 +82,3 @@ function animate() {
 }
 
 animate()
-
-/* RESIZE */
-window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight
-    camera.updateProjectionMatrix()
-    renderer.setSize(window.innerWidth, window.innerHeight)
-})
