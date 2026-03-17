@@ -59,14 +59,14 @@ function (gltf) {
 
     /* AUTO SCALE */
     const maxSize = Math.max(size.x, size.y, size.z)
-    const desiredSize = 12   // 🔥 adjust if needed
+    const desiredSize = 20  // 🔥 adjust if needed
     const scale = desiredSize / maxSize
 
     island.scale.set(scale, scale, scale)
 
     /* CAMERA POSITION (PERFECT VIEW) */
-    camera.position.set(3, 4, 10)
-    camera.lookAt(0, 0, 0)
+    camera.position.set(2, 3, 6)
+    camera.lookAt(0, 1, 0)
 
     console.log("ISLAND LOADED ✅")
 },
