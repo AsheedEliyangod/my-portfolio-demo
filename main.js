@@ -58,7 +58,7 @@ function (gltf) {
     model.position.sub(center)
 
     /* ✅ SCALE FIX */
-    model.scale.set(5, 5, 5)
+    model.scale.set(1, 1, 1)
 
     /* ✅ LOOK AT CENTER */
     camera.lookAt(0, 0, 0)
