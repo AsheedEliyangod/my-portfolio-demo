@@ -58,16 +58,17 @@ function (gltf) {
 
     model.position.sub(center)
 
-    /* AUTO SCALE */
-    const maxDim = Math.max(size.x, size.y, size.z)
-    const scale = 3 / maxDim
-    model.scale.set(scale, scale, scale)
+    /* AUTO CENTER */
+const box = new THREE.Box3().setFromObject(model)
+const center = box.getCenter(new THREE.Vector3())
+model.position.sub(center)
 
-    /* CAMERA POSITION */
-    const distance = maxDim * 2
+/* 🔥 FIX SCALE (MAKE BIGGER) */
+model.scale.set(5, 5, 5)
 
-    camera.position.set(distance, distance, distance)
-    camera.lookAt(0, 0, 0)
+/* 🔥 FIX CAMERA (CLOSE VIEW) */
+camera.position.set(3, 2, 4)
+camera.lookAt(0, 0, 0)
 
     console.log("ISLAND LOADED ✅")
 },
