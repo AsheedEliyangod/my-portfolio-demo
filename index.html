@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test</title>
+<title>3D Portfolio</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -10,27 +10,14 @@
 
 <canvas id="canvas"></canvas>
 
+<!-- LOAD THREE -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+<!-- 🔥 ADD THIS (YOU MISSED IT) -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
+
+<!-- YOUR JS -->
 <script src="main.js"></script>
-
-</body>
-</html>    if (island) {
-        island.rotation.y += 0.003
-    }
-
-    renderer.render(scene, camera)
-}
-
-animate()
-
-/* RESIZE */
-window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight
-    camera.updateProjectionMatrix()
-    renderer.setSize(window.innerWidth, window.innerHeight)
-})
-
-</script>
 
 </body>
 </html>
