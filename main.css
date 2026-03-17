@@ -1,7 +1,7 @@
 body{
 margin:0;
 overflow:hidden;
-font-family:Arial;
+font-family:Arial, Helvetica, sans-serif;
 background:#020617;
 color:white;
 }
@@ -17,10 +17,6 @@ z-index:10;
 background:rgba(0,0,0,0.5);
 }
 
-header h1{
-margin:0;
-}
-
 /* CANVAS */
 #canvas{
 position:fixed;
@@ -28,19 +24,23 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-display:block;
 }
 
-/* UI PANEL */
-#ui{
-position:fixed;
+/* UI */
+.ui{
+position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-background:#020617;
-padding:30px;
-border-radius:10px;
-display:none;
-z-index:20;
 text-align:center;
+z-index:5;
+}
+
+.ui h2{
+font-size:50px;
+color:#38bdf8;
+}
+
+.ui p{
+opacity:0.7;
 }
