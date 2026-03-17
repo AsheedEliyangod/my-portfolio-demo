@@ -1,4 +1,4 @@
-console.log("JS RUNNING")
+
 
 const canvas = document.getElementById("canvas")
 
