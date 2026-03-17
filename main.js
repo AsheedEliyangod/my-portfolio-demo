@@ -1,6 +1,3 @@
-import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js'
-import { GLTFLoader } from 'https://unpkg.com/three@0.158.0/examples/jsm/loaders/GLTFLoader.js'
-
 const canvas = document.getElementById("canvas")
 
 /* SCENE */
@@ -23,66 +20,47 @@ antialias: true
 renderer.setSize(window.innerWidth,window.innerHeight)
 
 /* LIGHT */
-scene.add(new THREE.AmbientLight(0xffffff,0.8))
-
-const light = new THREE.DirectionalLight(0xffffff,1)
-light.position.set(5,10,5)
+const light = new THREE.HemisphereLight(0xffffff,0x444444,1)
 scene.add(light)
 
-/* GRID (DEBUG) */
+/* DEBUG GRID */
 const grid = new THREE.GridHelper(10,10)
 scene.add(grid)
 
 /* LOADER */
-const loader = new GLTFLoader()
-
-let island
+const loader = new THREE.GLTFLoader()
 
 /* LOAD MODEL */
-loader.load('./pirate_island.glb',(gltf)=>{
+loader.load(
+"pirate_island.glb",
 
-    island = gltf.scene
+function(gltf){
+
+    const model = gltf.scene
 
     /* CENTER MODEL */
-    const box = new THREE.Box3().setFromObject(island)
+    const box = new THREE.Box3().setFromObject(model)
     const center = box.getCenter(new THREE.Vector3())
-    island.position.sub(center)
+    model.position.sub(center)
 
-    island.scale.set(0.5,0.5,0.5)
+    model.scale.set(0.5,0.5,0.5)
 
-    scene.add(island)
+    scene.add(model)
 
-    console.log("Island loaded ✅")
+    console.log("MODEL LOADED ✅")
 
-},undefined,(error)=>{
-    console.error("ERROR loading model ❌", error)
-})
+},
+
+undefined,
+
+function(error){
+    console.error("ERROR ❌", error)
+}
+)
 
 /* LOOP */
 function animate(){
     requestAnimationFrame(animate)
-    renderer.render(scene,camera)
-}
-animate()
-
-/* RESIZE */
-window.addEventListener("resize",()=>{
-    camera.aspect = window.innerWidth/window.innerHeight
-    camera.updateProjectionMatrix()
-    renderer.setSize(window.innerWidth,window.innerHeight)
-})
-    }
-
-})
-
-/* ANIMATION */
-function animate(){
-
-    requestAnimationFrame(animate)
-
-    camera.position.lerp(targetPos,0.05)
-    camera.lookAt(0,0,0)
-
     renderer.render(scene,camera)
 }
 animate()
