@@ -1,41 +1,10 @@
 body {
   margin: 0;
   overflow: hidden;
-  font-family: Arial, sans-serif;
-  background: #020617;
-  color: white;
 }
 
-/* HEADER */
-header {
-  position: fixed;
-  width: 100%;
-  padding: 15px 20px;
-  background: #020617;
-  z-index: 10;
-}
-
-/* CANVAS */
 canvas {
   display: block;
-}
-
-/* ACTION BUTTON */
-.action-ui {
-  position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: none;
-  z-index: 100;
-}
-
-#actionBtn {
-  background: #38bdf8;
-  border: none;
-  padding: 14px 30px;
-  border-radius: 8px;
-  font-weight: bold;
-  color: black;
-  font-size: 16px;
+  width: 100vw;
+  height: 100vh;
 }
