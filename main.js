@@ -29,6 +29,7 @@ const renderer = new THREE.WebGLRenderer({
   antialias: true
 })
 renderer.setSize(window.innerWidth, window.innerHeight)
+renderer.setPixelRatio(window.devicePixelRatio)
 
 
 /* LIGHT */
@@ -60,28 +61,34 @@ loader.load("pirate_island.glb", function (gltf) {
 
 
     /* ===== PERFECT CENTER ===== */
-    const box = new THREE.Box3().setFromObject(island)
-    const center = box.getCenter(new THREE.Vector3())
-    const size = box.getSize(new THREE.Vector3())
+   /* ===== AUTO FIT CAMERA PERFECTLY ===== */
 
 
-    island.position.sub(center)
+const box = new THREE.Box3().setFromObject(island)
+const center = box.getCenter(new THREE.Vector3())
+const size = box.getSize(new THREE.Vector3())
 
 
-    /* ===== SCALE ===== */
-    const maxSize = Math.max(size.x, size.y, size.z)
-    const scale = 5 / maxSize
-    island.scale.set(scale, scale, scale)
+// center model
+island.position.sub(center)
 
 
-    /* ===== FIX HEIGHT ===== */
-    island.position.y -= 0.3
+// scale model
+const maxSize = Math.max(size.x, size.y, size.z)
+const scale = 5 / maxSize
+island.scale.set(scale, scale, scale)
 
 
-    /* ===== PERFECT CAMERA ===== */
-    camera.position.set(0, 2, 7)
-    camera.lookAt(0, 0, 0)
+// 🔥 IMPORTANT: compute distance
+const distance = maxSize * 2
 
+
+// set camera based on model size
+camera.position.set(distance, distance, distance)
+
+
+// ALWAYS look at center
+camera.lookAt(0, 0, 0)
 
     console.log("ISLAND LOADED ✅")
 
