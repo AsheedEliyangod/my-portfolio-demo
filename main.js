@@ -2,6 +2,11 @@ console.log("JS START")
 
 
 const canvas = document.getElementById("canvas")
+const uiPanel = document.getElementById("uiPanel")
+const uiText = document.getElementById("uiText")
+
+
+let currentPage = ""
 
 
 /* SCENE */
@@ -23,8 +28,6 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
   antialias: true
 })
-
-
 renderer.setSize(window.innerWidth, window.innerHeight)
 
 
@@ -37,6 +40,11 @@ light.position.set(5, 10, 7)
 scene.add(light)
 
 
+/* RAYCAST */
+const raycaster = new THREE.Raycaster()
+const mouse = new THREE.Vector2()
+
+
 /* MODEL */
 let island
 
@@ -44,55 +52,104 @@ let island
 const loader = new THREE.GLTFLoader()
 
 
-loader.load(
-"pirate_island.glb",
-
-
-function (gltf) {
-
-
-    console.log("ISLAND LOADED ✅")
+loader.load("pirate_island.glb", function (gltf) {
 
 
     island = gltf.scene
     scene.add(island)
 
 
-    /* ===== PERFECT CENTER + SCALE ===== */
+    /* ===== PERFECT CENTER ===== */
     const box = new THREE.Box3().setFromObject(island)
     const center = box.getCenter(new THREE.Vector3())
     const size = box.getSize(new THREE.Vector3())
 
 
-    // center model
     island.position.sub(center)
 
 
-    // scale nicely
+    /* ===== SCALE ===== */
     const maxSize = Math.max(size.x, size.y, size.z)
-    const scale = 6 / maxSize
+    const scale = 5 / maxSize
     island.scale.set(scale, scale, scale)
 
 
-    // push slightly down (fix base plane)
-    island.position.y -= 0.5
+    /* ===== FIX HEIGHT ===== */
+    island.position.y -= 0.3
 
 
     /* ===== PERFECT CAMERA ===== */
-    camera.position.set(4, 3, 8)
+    camera.position.set(0, 2, 7)
     camera.lookAt(0, 0, 0)
 
 
-},
+    console.log("ISLAND LOADED ✅")
 
 
-undefined,
+})
 
 
-function (error) {
-    console.error("MODEL ERROR ❌", error)
+/* CLICK DETECTION */
+function handleClick(x, y) {
+
+
+    mouse.x = (x / window.innerWidth) * 2 - 1
+    mouse.y = -(y / window.innerHeight) * 2 + 1
+
+
+    raycaster.setFromCamera(mouse, camera)
+
+
+    if (!island) return
+
+
+    const intersects = raycaster.intersectObjects(island.children, true)
+
+
+    if (intersects.length > 0) {
+
+
+        const name = intersects[0].object.name.toLowerCase()
+        console.log("Clicked:", name)
+
+
+        if (name.includes("house")) {
+            currentPage = "about.html"
+            uiText.innerText = "About Me"
+        }
+        else if (name.includes("ship") || name.includes("boat")) {
+            currentPage = "projects.html"
+            uiText.innerText = "Projects"
+        }
+        else {
+            currentPage = "contact.html"
+            uiText.innerText = "Contact"
+        }
+
+
+        uiPanel.style.display = "block"
+    }
 }
-)
+
+
+/* EVENTS */
+window.addEventListener("click", (e) => {
+    handleClick(e.clientX, e.clientY)
+})
+
+
+window.addEventListener("touchstart", (e) => {
+    const t = e.touches[0]
+    handleClick(t.clientX, t.clientY)
+})
+
+
+/* BUTTON */
+function goPage() {
+    if (currentPage) {
+        window.location.href = currentPage
+    }
+}
 
 
 /* ANIMATION */
@@ -101,14 +158,12 @@ function animate() {
 
 
     if (island) {
-        island.rotation.y += 0.003
+        island.rotation.y += 0.002
     }
 
 
     renderer.render(scene, camera)
 }
-
-
 animate()
 
 
