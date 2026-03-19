@@ -5,66 +5,24 @@
 <title>3D Portfolio</title>
 
 
-<style>
-body {
-  margin: 0;
-  overflow: hidden;
-  background: #020617;
-  font-family: Arial;
-}
+<link rel="stylesheet" href="style.css">
 
 
-/* TOP NAME */
-#title {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  color: white;
-  font-size: 22px;
-  font-weight: bold;
-}
-
-
-/* UI PANEL */
-#uiPanel {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.7);
-  padding: 15px 20px;
-  border-radius: 10px;
-  display: none;
-  color: white;
-  text-align: center;
-}
-
-
-button {
-  padding: 8px 15px;
-  border: none;
-  background: #0ea5e9;
-  color: white;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-
-
-</style>
 </head>
 
 
 <body>
 
 
-<div id="title">ASHEED</div>
+<h1 id="title">ASHEED</h1>
 
 
 <canvas id="canvas"></canvas>
 
 
+<!-- UI PANEL -->
 <div id="uiPanel">
-  <div id="uiText">Page</div>
+  <p id="uiText">Page</p>
   <button onclick="goPage()">Open</button>
 </div>
 
