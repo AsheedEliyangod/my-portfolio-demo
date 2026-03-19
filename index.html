@@ -10,20 +10,66 @@ body {
   margin: 0;
   overflow: hidden;
   background: #020617;
+  font-family: Arial;
 }
+
+
+/* TOP NAME */
+#title {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+
+/* UI PANEL */
+#uiPanel {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.7);
+  padding: 15px 20px;
+  border-radius: 10px;
+  display: none;
+  color: white;
+  text-align: center;
+}
+
+
+button {
+  padding: 8px 15px;
+  border: none;
+  background: #0ea5e9;
+  color: white;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+
 </style>
-
-
 </head>
 
 
 <body>
 
 
+<div id="title">ASHEED</div>
+
+
 <canvas id="canvas"></canvas>
 
 
-<!-- ✅ STABLE VERSION -->
+<div id="uiPanel">
+  <div id="uiText">Page</div>
+  <button onclick="goPage()">Open</button>
+</div>
+
+
+<!-- THREE -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
