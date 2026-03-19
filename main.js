@@ -17,10 +17,10 @@ scene.background = new THREE.Color(0x020617)
 
 /* CAMERA */
 const camera = new THREE.PerspectiveCamera(
-75,
-window.innerWidth / window.innerHeight,
-0.1,
-1000
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
 )
 
 
@@ -56,12 +56,10 @@ const loader = new THREE.GLTFLoader()
 
 
 loader.load(
-"pirate_island.glb",
+  "pirate_island.glb",
 
 
-function (gltf) {
-
-
+  function (gltf) {
     console.log("ISLAND LOADED ✅")
 
 
@@ -69,39 +67,26 @@ function (gltf) {
     scene.add(island)
 
 
-    /* ===== CENTER MODEL ===== */
-    const box = new THREE.Box3().setFromObject(island)
-    const center = box.getCenter(new THREE.Vector3())
-    const size = box.getSize(new THREE.Vector3())
+    /* ===== FIXED POSITION ===== */
+    island.position.set(0, 0, 0)
 
 
-    island.position.sub(center)
+    /* ===== FIXED SCALE (WORKS EVERYWHERE) ===== */
+    island.scale.set(3, 3, 3)   // 🔥 increase if still small
 
 
-    /* ===== SCALE (BIG & PERFECT) ===== */
-    const maxSize = Math.max(size.x, size.y, size.z)
-    const scale = 15 / maxSize   // 🔥 adjust here if needed
-    island.scale.set(scale, scale, scale)
-
-
-    /* ===== HEIGHT FIX ===== */
-    island.position.y -= 0.5
-
-
-    /* ===== CAMERA PERFECT VIEW ===== */
-    camera.position.set(4, 3, 6)
+    /* ===== FIXED CAMERA ===== */
+    camera.position.set(0, 2, 5)
     camera.lookAt(0, 0, 0)
+  },
 
 
-},
+  undefined,
 
 
-undefined,
-
-
-function (error) {
+  function (error) {
     console.error("MODEL ERROR ❌", error)
-}
+  }
 )
 
 
@@ -109,76 +94,76 @@ function (error) {
 function handleClick(x, y) {
 
 
-    mouse.x = (x / window.innerWidth) * 2 - 1
-    mouse.y = -(y / window.innerHeight) * 2 + 1
+  mouse.x = (x / window.innerWidth) * 2 - 1
+  mouse.y = -(y / window.innerHeight) * 2 + 1
 
 
-    raycaster.setFromCamera(mouse, camera)
+  raycaster.setFromCamera(mouse, camera)
 
 
-    if (!island) return
+  if (!island) return
 
 
-    const intersects = raycaster.intersectObjects(island.children, true)
+  const intersects = raycaster.intersectObjects(island.children, true)
 
 
-    if (intersects.length > 0) {
+  if (intersects.length > 0) {
 
 
-        const name = intersects[0].object.name.toLowerCase()
-        console.log("Clicked:", name)
+    const name = intersects[0].object.name.toLowerCase()
+    console.log("Clicked:", name)
 
 
-        if (name.includes("house")) {
-            currentPage = "about.html"
-            uiText.innerText = "About Me"
-        }
-        else if (name.includes("ship") || name.includes("boat")) {
-            currentPage = "projects.html"
-            uiText.innerText = "Projects"
-        }
-        else {
-            currentPage = "contact.html"
-            uiText.innerText = "Contact"
-        }
-
-
-        uiPanel.style.display = "block"
+    if (name.includes("house")) {
+      currentPage = "about.html"
+      uiText.innerText = "About Me"
     }
+    else if (name.includes("ship") || name.includes("boat")) {
+      currentPage = "projects.html"
+      uiText.innerText = "Projects"
+    }
+    else {
+      currentPage = "contact.html"
+      uiText.innerText = "Contact"
+    }
+
+
+    uiPanel.style.display = "block"
+  }
 }
 
 
 /* EVENTS */
 window.addEventListener("click", (e) => {
-    handleClick(e.clientX, e.clientY)
+  handleClick(e.clientX, e.clientY)
 })
 
 
 window.addEventListener("touchstart", (e) => {
-    const t = e.touches[0]
-    handleClick(t.clientX, t.clientY)
+  const t = e.touches[0]
+  handleClick(t.clientX, t.clientY)
 })
 
 
 /* BUTTON */
 function goPage() {
-    if (currentPage) {
-        window.location.href = currentPage
-    }
+  if (currentPage) {
+    window.location.href = currentPage
+  }
 }
 
 
-/* ANIMATION LOOP */
+/* ANIMATION */
 function animate() {
-    requestAnimationFrame(animate)
+  requestAnimationFrame(animate)
 
 
-    if (island) {
-        island.rotation.y += 0.002
-    }
+  if (island) {
+    island.rotation.y += 0.002
+  }
 
 
-    renderer.render(scene, camera)
+  renderer.render(scene, camera)
 }
 
 
@@ -187,7 +172,7 @@ animate()
 
 /* RESIZE */
 window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight
-    camera.updateProjectionMatrix()
-    renderer.setSize(window.innerWidth, window.innerHeight)
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+  renderer.setSize(window.innerWidth, window.innerHeight)
 })
