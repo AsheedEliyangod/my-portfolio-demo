@@ -72,7 +72,7 @@ loader.load(
 
 
     /* ===== FIXED SCALE (WORKS EVERYWHERE) ===== */
-    island.scale.set(.05, .05, .05)   // 🔥 increase if still small
+    island.scale.set(.1, .1, .1)   // 🔥 increase if still small
 
 
     /* ===== FIXED CAMERA ===== */
@@ -123,8 +123,8 @@ function handleClick(x, y) {
       uiText.innerText = "Projects"
     }
     else {
-      currentPage = "contact.html"
-      uiText.innerText = "Contact"
+      currentPage = "about.html"
+      uiText.innerText = "About ME"
     }
 
 
