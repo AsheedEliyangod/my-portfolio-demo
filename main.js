@@ -2,10 +2,11 @@ console.log("JS START")
 
 
 const canvas = document.getElementById("canvas")
+
+
+/* UI */
 const uiPanel = document.getElementById("uiPanel")
 const uiText = document.getElementById("uiText")
-
-
 let currentPage = ""
 
 
@@ -32,8 +33,9 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.setPixelRatio(window.devicePixelRatio)
 
 
-/* LIGHT */
-scene.add(new THREE.AmbientLight(0xffffff, 1.5))
+/* LIGHTING */
+const ambient = new THREE.AmbientLight(0xffffff, 1.5)
+scene.add(ambient)
 
 
 const light = new THREE.DirectionalLight(0xffffff, 2)
@@ -53,50 +55,57 @@ let island
 const loader = new THREE.GLTFLoader()
 
 
-loader.load("pirate_island.glb", function (gltf) {
+loader.load(
+"pirate_island.glb",
+
+
+function (gltf) {
+
+
+    console.log("ISLAND LOADED ✅")
 
 
     island = gltf.scene
     scene.add(island)
 
 
-    /* ===== PERFECT CENTER ===== */
-   /* ===== AUTO FIT CAMERA PERFECTLY ===== */
+    /* ===== CENTER MODEL ===== */
+    const box = new THREE.Box3().setFromObject(island)
+    const center = box.getCenter(new THREE.Vector3())
+    const size = box.getSize(new THREE.Vector3())
 
 
-const box = new THREE.Box3().setFromObject(island)
-const center = box.getCenter(new THREE.Vector3())
-const size = box.getSize(new THREE.Vector3())
+    island.position.sub(center)
 
 
-// center model
-island.position.sub(center)
+    /* ===== SCALE (BIG & PERFECT) ===== */
+    const maxSize = Math.max(size.x, size.y, size.z)
+    const scale = 15 / maxSize   // 🔥 adjust here if needed
+    island.scale.set(scale, scale, scale)
 
 
-// scale model
-const maxSize = Math.max(size.x, size.y, size.z)
-const scale = 5 / maxSize
-island.scale.set(scale, scale, scale)
+    /* ===== HEIGHT FIX ===== */
+    island.position.y -= 0.5
 
 
-// 🔥 IMPORTANT: compute distance
-const distance = maxSize * 2
+    /* ===== CAMERA PERFECT VIEW ===== */
+    camera.position.set(4, 3, 6)
+    camera.lookAt(0, 0, 0)
 
 
-// set camera based on model size
-camera.position.set(distance, distance, distance)
+},
 
 
-// ALWAYS look at center
-camera.lookAt(0, 0, 0)
-
-    console.log("ISLAND LOADED ✅")
+undefined,
 
 
-})
+function (error) {
+    console.error("MODEL ERROR ❌", error)
+}
+)
 
 
-/* CLICK DETECTION */
+/* CLICK HANDLER */
 function handleClick(x, y) {
 
 
@@ -159,7 +168,7 @@ function goPage() {
 }
 
 
-/* ANIMATION */
+/* ANIMATION LOOP */
 function animate() {
     requestAnimationFrame(animate)
 
@@ -171,6 +180,8 @@ function animate() {
 
     renderer.render(scene, camera)
 }
+
+
 animate()
 
 
