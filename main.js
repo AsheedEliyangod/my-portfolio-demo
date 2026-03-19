@@ -1,6 +1,3 @@
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js";
-import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/loaders/GLTFLoader.js";
-
 console.log("JS START")
 
 const canvas = document.getElementById("canvas")
@@ -36,10 +33,10 @@ scene.add(light)
 let island
 
 /* LOADER */
-const loader = new GLTFLoader()
+const loader = new THREE.GLTFLoader()
 
 loader.load(
-"/my-portfolio-demo/pirate_island.glb",   // 🔥 IMPORTANT PATH
+"pirate_island.glb",
 
 function (gltf) {
 
