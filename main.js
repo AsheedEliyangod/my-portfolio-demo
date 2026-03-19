@@ -1,12 +1,15 @@
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/loaders/GLTFLoader.js";
+
 console.log("JS START")
 
 const canvas = document.getElementById("canvas")
 
+/* SCENE */
 const scene = new THREE.Scene()
+scene.background = new THREE.Color(0x020617)
 
-/* 🔥 FORCE DARK BACKGROUND */
-scene.background = new THREE.Color(0x000000)
-
+/* CAMERA */
 const camera = new THREE.PerspectiveCamera(
 75,
 window.innerWidth / window.innerHeight,
@@ -14,65 +17,63 @@ window.innerWidth / window.innerHeight,
 1000
 )
 
-const renderer = new THREE.WebGLRenderer({ canvas })
+/* RENDERER */
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas,
+  antialias: true
+})
+
 renderer.setSize(window.innerWidth, window.innerHeight)
 
 /* LIGHT */
 scene.add(new THREE.AmbientLight(0xffffff, 1.5))
 
 const light = new THREE.DirectionalLight(0xffffff, 2)
-light.position.set(5,10,7)
+light.position.set(5, 10, 7)
 scene.add(light)
-
-/* TEST CUBE (IMPORTANT) */
-const cube = new THREE.Mesh(
-  new THREE.BoxGeometry(),
-  new THREE.MeshBasicMaterial({ color: 0xff0000 })
-)
-scene.add(cube)
 
 /* MODEL */
 let island
 
-const loader = new THREE.GLTFLoader()
+/* LOADER */
+const loader = new GLTFLoader()
 
 loader.load(
-"/my-portfolio-demo/pirate_island.glb",  // 🔥 FORCE FULL PATH
+"/my-portfolio-demo/pirate_island.glb",   // 🔥 IMPORTANT PATH
 
 function (gltf) {
 
-    console.log("LOADED ✅")
+    console.log("ISLAND LOADED ✅")
 
     island = gltf.scene
     scene.add(island)
 
+    /* CENTER */
     const box = new THREE.Box3().setFromObject(island)
     const center = box.getCenter(new THREE.Vector3())
     const size = box.getSize(new THREE.Vector3())
 
     island.position.sub(center)
 
+    /* SCALE */
     const scale = 10 / Math.max(size.x, size.y, size.z)
     island.scale.set(scale, scale, scale)
 
+    /* CAMERA */
+    camera.position.set(2, 3, 6)
+    camera.lookAt(0, 0, 0)
 },
 
 undefined,
 
 function (error) {
-    console.error("ERROR ❌", error)
+    console.error("MODEL ERROR ❌", error)
 }
 )
 
-/* CAMERA */
-camera.position.set(0, 2, 6)
-camera.lookAt(0, 0, 0)
-
-/* ANIMATE */
+/* ANIMATION */
 function animate() {
     requestAnimationFrame(animate)
-
-    cube.rotation.y += 0.01
 
     if (island) {
         island.rotation.y += 0.003
@@ -82,3 +83,10 @@ function animate() {
 }
 
 animate()
+
+/* RESIZE */
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(window.innerWidth, window.innerHeight)
+})
