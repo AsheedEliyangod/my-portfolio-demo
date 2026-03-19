@@ -72,7 +72,7 @@ loader.load(
 
 
     /* ===== FIXED SCALE (WORKS EVERYWHERE) ===== */
-    island.scale.set(3, 3, 3)   // 🔥 increase if still small
+    island.scale.set(.5, .5, .5)   // 🔥 increase if still small
 
 
     /* ===== FIXED CAMERA ===== */
